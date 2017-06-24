@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% load staticfiles %}
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/theatre-512.png' %}" />
+  <title>Moviefy</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Material Design Bootstrap -->
+  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+
+  <!-- Template styles -->
+  <style rel="stylesheet">
+    /* TEMPLATE STYLES */
+    /* Necessary for full page carousel*/
+
+    html,
+    body,
+    .view {
+      height: 100%;
+      width: 100%;
+    }
+    /* Navigation*/
+
+    .navbar {
+      background-color: #4e5d7a;
+    }
+
+    .scrolling-navbar {
+      -webkit-transition: background .5s ease-in-out, padding .5s ease-in-out;
+      -moz-transition: background .5s ease-in-out, padding .5s ease-in-out;
+      transition: background .5s ease-in-out, padding .5s ease-in-out;
+    }
+
+    .top-nav-collapse {
+      background-color: #1C2331;
+    }
+
+    footer.page-footer {
+      background-color: #1C2331;
+      margin-top: 0;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .navbar {
+        background-color: #1C2331;
+      }
+    }
+    /* Carousel*/
+
+    .carousel,
+    .carousel-item,
+    .active {
+      height: 100%;
+    }
+
+    .carousel-inner {
+      height: 100%;
+    }
+
+    .flex-center {
+      color: #fff;
+    }
+
+    .carousel-caption {
+      height: 100%;
+      padding-top: 7rem;
+    }
+  </style>
+
+</head>
+
+<body>
+
+
+  <!--Navbar-->
+
+
+  <nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar">
+    <div class="container">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+      <a href="{% url 'home:index' %}" class="navbar-brand" href="#">
+                <strong>Moviefy</strong>
+            </a>
+      <div class="collapse navbar-collapse" id="navbarNav1">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a href="{% url 'home:index' %}" class="nav-link">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">How it works</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'try:index' %}" class="nav-link">Try it out</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">About</a>
+          </li>
+        </ul>
+
+        <a class="btn btn-info btn-sm navbar-right"><i class="fa fa-magic left"></i> Login</a>
+
+      </div>
+    </div>
+  </nav>
+  <!--/.Navbar-->
+
+  <!--Carousel Wrapper-->
+  <div id="video-carousel-example2" class="carousel slide carousel-fade" data-ride="carousel">
+
+    <!--Slides-->
+    <div class="carousel-inner" role="listbox">
+      <!--First slide-->
+      <div class="carousel-item active">
+        <!--Mask color-->
+        <div class="view hm-black-light">
+
+          <!--Video source-->
+          <video class="video-full" autoplay loop>
+                        <source src="http://mdbootstrap.com/images/video/Tropical.mp4" type="video/mp4" />
+                    </video>
+          <div class="full-bg-img"></div>
+        </div>
+
+        <!--Caption-->
+        <div class="carousel-caption">
+          <div class="flex-center animated fadeIn">
+            <ul>
+              <li>
+                <h1 class="h1-responsive">Moviefy</h1></li>
+              <li>
+                <p>Artificial Intelligenece can now tell you what movie to watch!</p>
+              </li>
+              <li>
+                <a target="_blank" href="#" class="btn btn-primary btn-lg" rel="nofollow">Sign up!</a>
+                <a href="{% url 'try:index' %}" class="btn danger-color btn-lg" rel="nofollow">Try it out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!--Caption-->
+      </div>
+      <!--/First slide-->
+
+
+      <!--/.Slides-->
+
+
+    </div>
+    <!--/.Carousel Wrapper-->
+
+    <!--/.Main layout-->
+
+
+
+    <!--Footer-->
+    <footer class="page-footer center-on-small-only">
+
+      <!--Footer Links-->
+      <div class="container-fluid">
+        <div class="row">
+
+          <!--First column-->
+          <div class="col-lg-3 offset-lg-1 hidden-lg-down">
+            <h5 class="title">ABOUT MOVIEFY</h5>
+            <p>Moviefy is a Machine Learning based artificial system for recommending movies based on your recent activities. </p>
+
+            <p>Moviefy is the new way of watching movies!.</p>
+          </div>
+          <!--/.First column-->
+
+          <hr class="hidden-md-up">
+
+          <!--Second column-->
+          <div class="col-lg-2 col-md-4 offset-lg-1">
+            <h5 class="title">First column</h5>
+            <ul>
+              <li><a href="#!">Link 1</a></li>
+              <li><a href="#!">Link 2</a></li>
+              <li><a href="#!">Link 3</a></li>
+              <li><a href="#!">Link 4</a></li>
+            </ul>
+          </div>
+          <!--/.Second column-->
+
+          <hr class="hidden-md-up">
+
+          <!--Third column-->
+          <div class="col-lg-2 col-md-4">
+            <h5 class="title">Second column</h5>
+            <ul>
+              <li><a href="#!">Link 1</a></li>
+              <li><a href="#!">Link 2</a></li>
+              <li><a href="#!">Link 3</a></li>
+              <li><a href="#!">Link 4</a></li>
+            </ul>
+          </div>
+          <!--/.Third column-->
+
+          <hr class="hidden-md-up">
+
+          <!--Fourth column-->
+          <div class="col-lg-2 col-md-4">
+            <h5 class="title">Third column</h5>
+            <ul>
+              <li><a href="#!">Link 1</a></li>
+              <li><a href="#!">Link 2</a></li>
+              <li><a href="#!">Link 3</a></li>
+              <li><a href="#!">Link 4</a></li>
+            </ul>
+          </div>
+          <!--/.Fourth column-->
+
+        </div>
+      </div>
+      <!--/.Footer Links-->
+
+      <hr>
+
+      <!--Call to action-->
+      <div class="call-to-action">
+        <h4>Material Design for Bootstrap</h4>
+        <ul>
+          <li>
+            <h5>Get our UI KIT for free</h5></li>
+          <li><a target="_blank" href="http://mdbootstrap.com/getting-started/" class="btn btn-danger" rel="nofollow">Sign up!</a></li>
+          <li><a target="_blank" href="http://mdbootstrap.com/material-design-for-bootstrap/" class="btn btn-default" rel="nofollow">Learn more</a></li>
+        </ul>
+      </div>
+      <!--/.Call to action-->
+
+      <!--Copyright-->
+      <div class="footer-copyright">
+        <div class="container-fluid">
+          © 2017 Copyright: <a href="http://www.MDBootstrap.com"> Moviefy.com </a>
+
+        </div>
+      </div>
+      <!--/.Copyright-->
+
+    </footer>
+    <!--/.Footer-->
+
+
+    <!-- SCRIPTS -->
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
+
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{% static 'js/tether.min.js' %}"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<VirtualHost *:80>
+    # This is name based virtual hosting. So place an appropriate server name
+    #   here. Example: django.devsrv.local
+    ServerName  [[SERVER_NAME]]
+    ServerAdmin webmaster@localhost
+
+    # This alias makes serving static files possible.
+    #   Please note, that this is geared to our settings/common.py
+    #   In production environment, you will propably adjust this!
+    Alias /static/  /home/maged/Documents/Graduation Project/Workflow/Web Application/moviefy-webapp/moviefy/run/static/
+
+    # This alias makes serving media files possible.
+    #   Please note, that this is geared to our settings/common.py
+    #   In production environment, you will propably adjust this!
+    Alias /media/  /home/maged/Documents/Graduation Project/Workflow/Web Application/moviefy-webapp/moviefy/run/media/
+
+    # Insert the full path to the wsgi.py-file here
+    WSGIScriptAlias /   /home/maged/Documents/Graduation Project/Workflow/Web Application/moviefy-webapp/moviefy/moviefy/wsgi.py
+
+    # PROCESS_NAME specifies a distinct name of this process
+    #   see: https://code.google.com/p/modwsgi/wiki/ConfigurationDirectives#WSGIDaemonProcess
+    # PATH/TO/PROJECT_ROOT is the full path to your project's root directory, 
+    #   containing your project files
+    # PATH/TO/VIRTUALENV/ROOT: If you are using a virtualenv specify the full
+    #   path to its directory.
+    #   Generally you must specify the path to Python's site-packages.
+    WSGIDaemonProcess   moviefy  python-path=/home/maged/Documents/Graduation Project/Workflow/Web Application/moviefy-webapp/moviefy:/home/maged/Documents/Graduation Project/Workflow/Web Application/moviefy-webapp/moviefy/../lib/python2.7/site-packages
+
+    # PROCESS_GROUP specifies a distinct name for the process group
+    #   see: https://code.google.com/p/modwsgi/wiki/ConfigurationDirectives#WSGIProcessGroup
+    WSGIProcessGroup    moviefy
+
+    # Serving static files from this directory
+    #   Please note, that this is geared to our settings/common.py
+    #   In production environment, you will propably adjust this!
+    <Directory /home/maged/Documents/Graduation Project/Workflow/Web Application/moviefy-webapp/moviefy/run/static>
+        Options -Indexes
+        Order deny,allow
+        Allow from all
+    </Directory>
+
+    # Serving media files from this directory
+    #   Please note, that this is geared to our settings/common.py
+    #   In production environment, you will propably adjust this!
+    <Directory /home/maged/Documents/Graduation Project/Workflow/Web Application/moviefy-webapp/moviefy/run/media>
+        Options -Indexes
+        Order deny,allow
+        Allow from all
+    </Directory>
+
+    LogLevel warn
+
+    # PROJECT_NAME is used to seperate the log files of this application
+    ErrorLog    ${APACHE_LOG_DIR}/moviefy_error.log
+    CustomLog   ${APACHE_LOG_DIR}/moviefy_access.log combined
+</VirtualHost>
