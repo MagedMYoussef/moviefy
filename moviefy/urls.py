@@ -20,5 +20,9 @@ urlpatterns = [
     url(r'^recommend/', include('recommend.urls')),
 
     # Model API
-    url(r'^modelapi/', include('moviefy_lstm.urls'))
+    url(r'^modelapi/', include('moviefy_lstm.urls')),
+
+    # User Profile
+    # \w will match any word characters and digits
+    url(r'^user/(?P<username>\w+)/', include('user_profile.urls'))
 ]

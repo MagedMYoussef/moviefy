@@ -6,8 +6,25 @@ from .lstm_model import runLSTM
 
 '''
 Some results from request/responses
-curl "http://127.0.0.1:8000/lstm/?model_input="he"&movie_year=3"
-{"result":"Happy, 70%, Terminal"}
+curl 127.0.0.1:8000/modelapi/?model_input="I am very happy today"
+{
+    "movies": {
+        "movie_2": "NOT YET",
+        "movie_3": "NOT YET",
+        "movie_1": "NOT YET"
+    },
+    "options": {
+        "rating": "rating",
+        "movie_year": "movie_year"
+    },
+    "feelings": {
+        "anger": 0.006648946087807417,
+        "joy": 0.9444617033004761,
+        "fear": 0.010349957272410393,
+        "sadness": 0.036381904035806656,
+        "disgust": 0.0021575307473540306
+    }
+}
 '''
 class LSTMView(views.APIView):
 
