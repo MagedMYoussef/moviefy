@@ -50,6 +50,8 @@ DEFAULT_APPS = [
     'homepage.apps.HomepageConfig',
     'tryitout.apps.TryitoutConfig',
     'recommend.apps.RecommendConfig',
+    'rest_framework',
+    'moviefy_lstm.apps.MoviefyLstmConfig',
 ]
 
 # Middlewares
