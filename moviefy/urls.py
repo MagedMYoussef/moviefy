@@ -24,5 +24,6 @@ urlpatterns = [
 
     # User Profile
     # \w will match any word characters and digits
-    url(r'^user/(?P<username>\w+)/', include('user_profile.urls'))
+    url(r'^user/(?P<username>\w+)/', include('user_profile.urls')),
+
 ]
