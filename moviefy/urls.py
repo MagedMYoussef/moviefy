@@ -27,3 +27,4 @@ urlpatterns = [
     url(r'^user/(?P<username>\w+)/', include('user_profile.urls')),
 
 ]
+
