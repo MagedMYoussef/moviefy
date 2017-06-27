@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/theatre-512.png' %}"/>
+    <title>{% block title %}Moviefy{% endblock %}</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+
+    <!-- Template styles -->
+    <style rel="stylesheet">
+        /* TEMPLATE STYLES */
+        /* Necessary for full page carousel*/
+
+        html,
+        body,
+        .view {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Navigation*/
+
+        .navbar {
+            background-color: #4e5d7a;
+        }
+
+        .scrolling-navbar {
+            -webkit-transition: background .5s ease-in-out, padding .5s ease-in-out;
+            -moz-transition: background .5s ease-in-out, padding .5s ease-in-out;
+            transition: background .5s ease-in-out, padding .5s ease-in-out;
+        }
+
+        .top-nav-collapse {
+            background-color: #1C2331;
+        }
+
+        footer.page-footer {
+            background-color: #1C2331;
+            margin-top: 0;
+        }
+
+        .img-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            margin-right: 10px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .navbar {
+                background-color: #1C2331;
+            }
+        }
+
+        {% block extra_css %}
+        {% endblock %}
+
+    </style>
+
+
+</head>
+
+
+<body>
+<!--Navbar-->
+<nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a href="{% url 'home:index' %}" class="navbar-brand" href="#">
+            <strong>Moviefy</strong>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav1">
+            <ul class="navbar-nav mr-auto">
+                <li class={% block active_home %}"nav-item"{% endblock %}>
+                    <a href="{% url 'home:index' %}" class="nav-link">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class={% block active_how %}"nav-item"{% endblock %}>
+                    <a class="nav-link">How it works</a>
+                </li>
+                <li class={% block active_try %}"nav-item"{% endblock %}>
+                    <a href="{% url 'try:index' %}" class="nav-link">Try it out</a>
+                </li>
+                <li class={% block active_about %}"nav-item"{% endblock %}>
+                    <a class="nav-link">About</a>
+                </li>
+            </ul>
+            {% if request.user.is_authenticated %}
+                {% for account in request.user.socialaccount_set.all %}
+                    <a href="{% url 'user_profile:profile' %}"> <img class="img-circle" src="{{ account.extra_data.profile_image_url_https|cut:'_normal' }}"></a>
+                {% endfor %}
+                <a href="{% url 'account_logout' %}" class="btn btn-info btn-sm navbar-right">Logout</a>
+
+            {% else %}
+                <a href="{% url 'account_login' %}" class="btn btn-info btn-sm navbar-right"><i class="fa fa-magic left"></i> Login</a>
+
+            {% endif %}
+
+        </div>
+    </div>
+</nav>
+<!--/.Navbar-->
+{% block body_remainder %}
+{% endblock %}
+{% block footer %}
+{% endblock %}
+</body>
+
+<!-- SCRIPTS -->
+
+<!-- JQuery -->
+<script type="text/javascript" src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
+
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static 'js/tether.min.js' %}"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+
+{% block extra_js %}
+{% endblock %}
+</html>

@@ -1,297 +1,199 @@
-<!DOCTYPE html>
-<html lang="en">
-
+{% extends 'base.html' %}
 {% load staticfiles %}
-<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/theatre-512.png' %}"/>
-    <title>Try it out</title>
+{% block extra_css %}
+    .container-2 {
+    padding-top: 70px;
+    height: 200px;
+    }
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    textarea.md-textarea {
+    height: 200px;
+    overflow-y: scroll;
+    }
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Material Design Bootstrap -->
-    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
-
-    <!-- Template styles -->
-    <style rel="stylesheet">
-        /* TEMPLATE STYLES */
-        /* Necessary for full page carousel*/
-
-        html,
-        body,
-        .view {
-            height: 100%;
-            width: 100%;
-        }
-
-        /* Navigation*/
-
-        .navbar {
-            background-color: #4e5d7a;
-        }
-
-        .scrolling-navbar {
-            -webkit-transition: background .5s ease-in-out, padding .5s ease-in-out;
-            -moz-transition: background .5s ease-in-out, padding .5s ease-in-out;
-            transition: background .5s ease-in-out, padding .5s ease-in-out;
-        }
-
-        .top-nav-collapse {
-            background-color: #1C2331;
-        }
-
-        footer.page-footer {
-            background-color: #1C2331;
-            margin-top: 0;
-        }
-
-        @media only screen and (max-width: 768px) {
-            .navbar {
-                background-color: #1C2331;
-            }
-        }
-
-        .container-2 {
-            padding-top: 70px;
-            height: 200px;
-        }
-
-        textarea.md-textarea {
-            height: 200px;
-            overflow-y: scroll;
-        }
-
-        .img-clip {
-        }
-    </style>
+    .img-clip {
+    }
 
 
-</head>
-
-<body>
-
+{% endblock %}
+{% block active_try %}
+    "nav-item active"
+{% endblock %}
 
 <!--Navbar-->
+{% block body_remainder %}
 
+    <div class="container container-2 ">
+        {% if not recommend %}
+            <!-- Moviefy Header -->
+            <div class="row">
 
-<nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar">
-    <div class="container">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a href="{% url 'home:index' %}" class="navbar-brand" href="#">
-            <strong>Moviefy</strong>
-        </a>
-        <div class="collapse navbar-collapse" id="navbarNav1">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a href="{% url 'home:index' %}" class="nav-link">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">How it works</a>
-                </li>
-                <li class="nav-item active">
-                    <a href="{% url 'try:index' %}" class="nav-link">Try it out</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">About</a>
-                </li>
-            </ul>
+                <div class="col col-md-12">
+                    <div class="author-box">
+                        <!--Name-->
+                        <div class="row">
+                            <!--Avatar-->
+                            <div class="col-12 col-sm-2">
+                                <img src="{% static 'img/theatre-512.png' %}"
+                                     class="img-fluid rounded-circle z-depth-2">
+                            </div>
+                            <!--Author Data-->
+                            <div class=" col-12 col-sm-10">
+                                <h2><strong>Moviefy</strong></h2>
 
-            <a class="btn btn-info btn-sm navbar-right"><i class="fa fa-magic left"></i> Login</a>
-
-        </div>
-    </div>
-</nav>
-<!--/.Navbar-->
-
-<div class="container container-2 ">
-    {% if not recommend %}
-        <!-- Moviefy Header -->
-        <div class="row">
-
-            <div class="col col-md-12">
-                <div class="author-box">
-                    <!--Name-->
-                    <div class="row">
-                        <!--Avatar-->
-                        <div class="col-12 col-sm-2">
-                            <img src="{% static 'img/theatre-512.png' %}" class="img-fluid rounded-circle z-depth-2">
-                        </div>
-                        <!--Author Data-->
-                        <div class=" col-12 col-sm-10">
-                            <h2><strong>Moviefy</strong></h2>
-
-                            <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo
-                                minus.</p>
-                            <p class="hidden-md-down">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint
-                                esse nulla quia quam veniam commodi dicta, iusto inventore. Voluptatum pariatur eveniet
-                                ea, officiis vitae praesentium beatae quas libero, esse facere.
-                            </p>
+                                <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo
+                                    minus.</p>
+                                <p class="hidden-md-down">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint
+                                    esse nulla quia quam veniam commodi dicta, iusto inventore. Voluptatum pariatur
+                                    eveniet
+                                    ea, officiis vitae praesentium beatae quas libero, esse facere.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <form id="user-input" method="post" action="{% url 'recommend:recommendation' %}" class="form col-md-12 center-block">
-                {% csrf_token %}
-                <div class="row">
+            <div class="row">
+                <form id="user-input" method="post" action="{% url 'recommend:recommendation' %}"
+                      class="form col-md-12 center-block">
+                    {% csrf_token %}
+                    <div class="row">
 
-                    <div class="col col-md-12">
-                        <div class="author-box">
-                            <h3><strong>Sample use cases</strong></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint esse nulla quia quam
-                                veniam commodi dicta, iusto inventore. Voluptatum pariatur eveniet ea, officiis vitae
-                                praesentium beatae quas libero, esse facere.
-                            </p>
-                            <br>
-                            <div id="tabs">
-                                <!-- Nav tabs -->
-                                <ul class="nav nav-tabs tabs-3 stylish-color" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#panel1"
-                                           role="tab">Tweets</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#panel2" role="tab">Online
-                                            Review</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#panel3" role="tab">Your own
-                                            text</a>
-                                    </li>
-                                </ul>
-                                <!-- Tab panels -->
-                                <div class="tab-content card">
-                                    <!--Panel 1-->
-                                    <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
-                                        <textarea  name="text-area1" id="textarea1" class="md-textarea" length="1000">I hate these new features On #ThisPhone after the update.</textarea>
-                                        <label for="textarea1">Type your tweets here.</label>
+                        <div class="col col-md-12">
+                            <div class="author-box">
+                                <h3><strong>Sample use cases</strong></h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint esse nulla quia quam
+                                    veniam commodi dicta, iusto inventore. Voluptatum pariatur eveniet ea, officiis
+                                    vitae
+                                    praesentium beatae quas libero, esse facere.
+                                </p>
+                                <br>
+                                <div id="tabs">
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs tabs-3 stylish-color" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#panel1"
+                                               role="tab">Tweets</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#panel2" role="tab">Online
+                                                Review</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#panel3" role="tab">Your own
+                                                text</a>
+                                        </li>
+                                    </ul>
+                                    <!-- Tab panels -->
+                                    <div class="tab-content card">
+                                        <!--Panel 1-->
+                                        <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
+                                            <textarea name="text-area1" id="textarea1" class="md-textarea"
+                                                      length="1000">I hate these new features On #ThisPhone after the update.</textarea>
+                                            <label for="textarea1">Type your tweets here.</label>
 
-                                    </div>
-                                    <!--/.Panel 1-->
-                                    <!--Panel 2-->
-                                    <div class="tab-pane fade" id="panel2" role="tabpanel">
-                                        <textarea name="text-area2" id="textarea2" class="md-textarea" length="1000" >I was asked to sign a thirtook a lot of wranglooms.  is you walk through </textarea>
-                                        <label for="textarea2">Edit/Add your own review.</label>
+                                        </div>
+                                        <!--/.Panel 1-->
+                                        <!--Panel 2-->
+                                        <div class="tab-pane fade" id="panel2" role="tabpanel">
+                                            <textarea name="text-area2" id="textarea2" class="md-textarea"
+                                                      length="1000">I was asked to sign a thirtook a lot of wranglooms.  is you walk through </textarea>
+                                            <label for="textarea2">Edit/Add your own review.</label>
 
-                                    </div>
+                                        </div>
 
-                                    <!--/.Panel 2-->
-                                    <!--Panel 3-->
+                                        <!--/.Panel 2-->
+                                        <!--Panel 3-->
 
-                                    <div class="tab-pane fade" id="panel3" role="tabpanel">
+                                        <div class="tab-pane fade" id="panel3" role="tabpanel">
                                         <textarea name="text-area3" id="textarea3" class="md-textarea" length="1000"
                                                   placeholder="Your text goes here..."></textarea>
-                                        <label for="textarea3">Try any text you want.</label>
+                                            <label for="textarea3">Try any text you want.</label>
 
+                                        </div>
+                                        <!--/.Panel 3-->
                                     </div>
-                                    <!--/.Panel 3-->
                                 </div>
+                                <div>
+
+                                </div>
+
                             </div>
+                        </div>
+
+
+                    </div>
+                    <!-- Recommend Button -->
+                    <div class="row">
+
+                        <div class="col col-md-12">
+                            <br>
+
                             <div>
+                                <button type="submit" class="btn btn-lg btn-flat btn-block red">
+                                    <i class="fa fa-magic left"></i>Recommend ME A MOVIE
+                                </button>
+
 
                             </div>
-
                         </div>
                     </div>
+                </form>
 
+            </div>
 
-                </div>
-                <!-- Recommend Button -->
-                <div class="row">
+            </div>
+        {% endif %}
 
-                    <div class="col col-md-12">
-                        <br>
+    </div>
 
-                        <div>
-                            <button type="submit" class="btn btn-lg btn-flat btn-block red">
-                                <i class="fa fa-magic left"></i>Recommend ME A MOVIE
-                            </button>
+{% endblock %}
 
-
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-        </div>
-
-        </div>
-    {% endif %}
-
-</div>
-
-
-<!-- SCRIPTS -->
-
-<!-- JQuery -->
-<script type="text/javascript" src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
-
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="{% static 'js/tether.min.js' %}"></script>
-
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
-
-<script>
-    $(document).ready(function () {
-        var current_tab;
-        // Handling data-toggle manually
-        $('.nav-tabs a').click(function () {
-            $(this).tab('show');
-        });
-        // The on tab shown event
+{% block extra_js %}
+    <script>
+        $(document).ready(function () {
+            var current_tab;
+            // Handling data-toggle manually
+            $('.nav-tabs a').click(function () {
+                $(this).tab('show');
+            });
+            // The on tab shown event
             $('.nav-tabs a').on('shown.bs.tab', function (e) {
                 current_tab = $(e.target).attr("href");
                 $('textarea').attr("disabled", false);
             });
-         $('#user-input').submit(function(){
-             if (current_tab) {
-                 current_tab = current_tab.substr(-1,1);
-             }
-             else {
-                 current_tab = "1";
-             }
-             current_tab = "text-area" + current_tab.toString()
+            $('#user-input').submit(function () {
+                if (current_tab) {
+                    current_tab = current_tab.substr(-1, 1);
+                }
+                else {
+                    current_tab = "1";
+                }
+                current_tab = "text-area" + current_tab.toString()
 
-             current_tab = current_tab.toString()
+                current_tab = current_tab.toString()
 
-             //window.alert(current_tab);
-             // target textarea to submit
-             $('textarea').attr("disabled", true);
-             //window.alert(current_tab);
-             if (current_tab == "text-area1") {
+                //window.alert(current_tab);
+                // target textarea to submit
+                $('textarea').attr("disabled", true);
+                //window.alert(current_tab);
+                if (current_tab == "text-area1") {
                     $('textarea[name="text-area1"]').prop('disabled', false);
-             }
-             else if (current_tab == "text-area2") {
+                }
+                else if (current_tab == "text-area2") {
                     $('textarea[name="text-area2"]').prop('disabled', false);
-             }
-             else if (current_tab == "text-area3") {
+                }
+                else if (current_tab == "text-area3") {
                     $('textarea[name="text-area3"]').prop('disabled', false);
-             }
+                }
 
-         });
+            });
 
-    });
+        });
 
 
-</script>
+    </script>
+{% endblock %}
 
-</body>
-
-</html>

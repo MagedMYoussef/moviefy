@@ -20,9 +20,6 @@ sys.setdefaultencoding('utf-8')
 '''
 # Setting the parameters
 '''
-### EMBEDDING_FILE = 'GoogleNews-vectors-negative300.bin'
-TRAINING_FILE = 'Sentences_25k_Tones_Labeled(Train).csv'
-TESTING_FILE = 'Sentences_25k_Tones_Labeled(Test).csv'
 MAX_SEQUENCE_LENGTH = 100
 MAX_NB_WORDS = 200000
 

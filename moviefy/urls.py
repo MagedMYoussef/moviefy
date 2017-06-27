@@ -1,6 +1,7 @@
-from django.conf.urls import  include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import RedirectView
+from django.contrib.auth.views import logout
 
 urlpatterns = [
     # Examples:
@@ -24,7 +25,11 @@ urlpatterns = [
 
     # User Profile
     # \w will match any word characters and digits
-    url(r'^user/(?P<username>\w+)/', include('user_profile.urls')),
+    # url(r'^user/(?P<username>\w+)/', include('user_profile.urls')),
+    url(r'^profile/', include('user_profile.urls')),
+
+    url(r'^accounts/', include('allauth.urls')),
+    url(r'^accounts/logout/$', logout,
+     {'next_page': '/accounts/login'}),
 
 ]
-

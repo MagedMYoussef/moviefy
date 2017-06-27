@@ -1,347 +1,209 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
 {% load staticfiles %}
-<head>
+{% block extra_css %}
+    .container-2 {
+    padding-top: 70px;
+    height: 200px;
+    }
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/theatre-512.png' %}"/>
-    <title>Try it out</title>
+    textarea.md-textarea {
+    height: 200px;
+    overflow-y: scroll;
+    }
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    .img-clip {
+    }
+    span.stars, span.stars span {
+    display: block;
+    background: url("../static/img/stars.png") 0 -16px repeat-x;
+    width: 80px;
+    height: 16px;
+    }
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    span.stars span {
+    background-position: 0 0;
+    }
+    .read-more-state {
+    display: none;
+    }
 
-    <!-- Material Design Bootstrap -->
-    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+    .read-more-target {
+    opacity: 0;
+    max-height: 0;
+    font-size: 0;
+    transition: .25s ease;
+    }
 
-    <!-- Template styles -->
-    <style rel="stylesheet">
-        /* TEMPLATE STYLES */
-        /* Necessary for full page carousel*/
+    .read-more-state:checked ~ .read-more-wrap .read-more-target {
+    opacity: 1;
+    font-size: inherit;
+    max-height: 999em;
+    }
 
-        html,
-        body,
-        .view {
-            height: 100%;
-            width: 100%;
-        }
+    .read-more-state ~ .read-more-trigger:before {
+    content: 'Show more';
+    }
 
-        /* Navigation*/
+    .read-more-state:checked ~ .read-more-trigger:before {
+    content: 'Show less';
+    }
 
-        .navbar {
-            background-color: #4e5d7a;
-        }
+    .read-more-trigger {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 .5em;
+    color: #666;
+    font-size: .9em;
+    line-height: 2;
+    border: 1px solid #ddd;
+    border-radius: .25em;
+    }
 
-        .scrolling-navbar {
-            -webkit-transition: background .5s ease-in-out, padding .5s ease-in-out;
-            -moz-transition: background .5s ease-in-out, padding .5s ease-in-out;
-            transition: background .5s ease-in-out, padding .5s ease-in-out;
-        }
+{% endblock %}
 
-        .top-nav-collapse {
-            background-color: #1C2331;
-        }
+{% block body_remainder %}
 
-        footer.page-footer {
-            background-color: #1C2331;
-            margin-top: 0;
-        }
+    <div class="container container-2 ">
 
-        @media only screen and (max-width: 768px) {
-            .navbar {
-                background-color: #1C2331;
+
+        {% if recommend %}
+            <br/>
+            <div class="row">
+
+                <div class="col col-md-12">
+                    <div class="author-box">
+                        <!--Name-->
+                        <div class="row">
+
+                            <!--Author Data-->
+                            <div class="col-12 col-sm-12">
+                                <h4><strong>Your feelings based on what you wrote.</strong></h4>
+                                <canvas id="feelingChart" width="1000" height="400"></canvas>
+                                <br/>
+                                <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo
+                                    minus.</p>
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6 offset-md-3 col-sm-12">
+                                <a href="{% url 'try:index' %}" class="btn btn-lg btn-flat btn-block red"><i
+                                        class="fa fa-magic left"></i> Try Again</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                {% for movie in movies_json %}
+
+                    <div class="col col-md-3">
+                        <br>
+                        <!--Card-->
+                        <div class="card card-cascade wider">
+
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                <img src="https://image.tmdb.org/t/p/w640/{{ movie.poster_path }}" class="img-fluid"
+                                     alt="">
+                                <a>
+                                    <div class="mask waves-effect waves-light"></div>
+                                </a>
+                            </div>
+                            <!--/.Card image-->
+
+                            <!--Card content-->
+                            <div class="card-block text-center">
+                                <!--Category & Title-->
+                                <h4 class="card-title"><strong><a href="">{{ movie.title }}</a></strong></h4>
+
+                                <!--Rating-->
+                                <div class="row justify-content-center">
+                                    <span class="stars">{% widthratio movie.vote_average 2 1 %}</span>
+                                </div>
+                                <br>
+                                <!--Description-->
+                                <div>
+                                    <input type="checkbox" class="read-more-state" id="post-{{ movie.id }}"/>
+
+                                    <p class="card-text read-more-wrap">{{ movie.overview|slice:":100" }}<span
+                                            class="read-more-target">{{ movie.overview|slice:"100:" }}</span>
+                                    </p>
+
+                                    <label for="post-{{ movie.id }}" class="read-more-trigger"></label>
+                                </div>
+
+
+                                <!--Card footer-->
+                                <div class="card-footer">
+                                  <span class="center">
+                                    <a href="https://www.themoviedb.org/movie/{{ movie.id }}" data-toggle="tooltip"
+                                           data-placement="top" title="Link"><i
+                                                class="fa fa-link"></i> TMDB</a>
+                                  </span>
+
+                                </div>
+
+                            </div>
+                            <!--/.Card content-->
+
+                        </div>
+                        <!--/.Card-->
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block extra_js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+    <script>
+        new Chart(document.getElementById("feelingChart"), {
+            type: 'doughnut',
+            data: {
+                labels: ["Anger", "Disgust", "Fear", "Joy", "Sadness"],
+
+                datasets: [{
+                    label: "Population (millions)",
+                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                    data: {{ feelings }}
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                }
             }
+        });
+        $.fn.stars = function () {
+            return $(this).each(function () {
+                // Get the value
+                var val = parseFloat($(this).html());
+
+
+                // Make sure that the value is in 0 - 5 range, multiply to get width
+                var size = Math.max(0, (Math.min(5, val))) * 16;
+                // Create stars holder
+                var $span = $('<span />').width(size);
+                // Replace the numerical value with stars
+                $(this).html($span);
+            });
         }
 
-        .container-2 {
-            padding-top: 70px;
-            height: 200px;
-        }
 
-        textarea.md-textarea {
-            height: 200px;
-            overflow-y: scroll;
-        }
+    </script>
 
-        .img-clip {
-        }
-    </style>
+    <script>
+        $(function () {
+            $('span.stars').stars();
+        });
+    </script>
+{% endblock %}
 
-
-</head>
-
-<body>
-
-
-<!--Navbar-->
-
-
-<nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar">
-    <div class="container">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a href="{% url 'home:index' %}" class="navbar-brand" href="#">
-            <strong>Moviefy</strong>
-        </a>
-        <div class="collapse navbar-collapse" id="navbarNav1">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a href="{% url 'home:index' %}" class="nav-link">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">How it works</a>
-                </li>
-                <li class="nav-item active">
-                    <a href="{% url 'try:index' %}" class="nav-link">Try it out</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">About</a>
-                </li>
-            </ul>
-
-            <a class="btn btn-info btn-sm navbar-right"><i class="fa fa-magic left"></i> Login</a>
-
-        </div>
-    </div>
-</nav>
-<!--/.Navbar-->
-
-<div class="container container-2 ">
-
-
-{% if recommend %}
-    <br/>
-    <div class="row">
-
-        <div class="col col-md-12">
-            <div class="author-box">
-                <!--Name-->
-                <div class="row">
-
-                    <!--Author Data-->
-                    <div class="col-12 col-sm-12">
-                        {% if user_text %}
-                            <h1>{{ user_text }}</h1>
-                        {% endif %}
-                        <h4><strong>Your feelings based on what you wrote.</strong></h4>
-                        <canvas id="feelingChart" width="1000" height="400"></canvas>
-                        <br/>
-                        <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
-                        </p>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col col-md-6 offset-md-3 col-sm-12">
-                        <a href="{% url 'try:index' %}" class="btn btn-lg btn-flat btn-block red"><i
-                                class="fa fa-magic left"></i> Try Again</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-center">
-
-        <div class="col col-md-3">
-            <br>
-            <!--Card-->
-            <div class="card card-cascade wider">
-
-                <!--Card image-->
-                <div class="view overlay hm-white-slight">
-                    <img src="{% static 'img/wonderwoman.jpg' %}" class="img-fluid" alt="">
-                    <a>
-                        <div class="mask waves-effect waves-light"></div>
-                    </a>
-                </div>
-                <!--/.Card image-->
-
-                <!--Card content-->
-                <div class="card-block text-center">
-                    <!--Category & Title-->
-                    <h5>Sci-fi</h5>
-                    <h4 class="card-title"><strong><a href="">Wonder Woman</a></strong></h4>
-
-                    <!--Rating-->
-                    <ul class="rating">
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star-o"></i></li>
-                    </ul>
-
-                    <!--Description-->
-                    <p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus
-                        saepe eveniet ut et voluptates.
-                    </p>
-
-                    <!--Card footer-->
-                    <div class="card-footer">
-              <span class="center">
-                <a href="#  " data-toggle="tooltip" data-placement="top" title="Link"><i
-                        class="fa fa-link"></i> IMDB</a>
-              </span>
-                    </div>
-
-                </div>
-                <!--/.Card content-->
-
-            </div>
-            <!--/.Card-->
-
-        </div>
-        <div class="col col-md-3">
-            <br>
-            <!--Card-->
-            <div class="card card-cascade wider">
-
-                <!--Card image-->
-                <div class="view overlay hm-white-slight">
-                    <img src="{% static 'img/kingsman.jpg' %}" class="img-fluid" alt="">
-                    <a>
-                        <div class="mask waves-effect waves-light"></div>
-                    </a>
-                </div>
-                <!--/.Card image-->
-
-                <!--Card content-->
-                <div class="card-block text-center">
-                    <!--Category & Title-->
-                    <h5>Action</h5>
-                    <h4 class="card-title"><strong><a href="">Kingsman</a></strong></h4>
-
-                    <!--Rating-->
-                    <ul class="rating">
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star-o"></i></li>
-                    </ul>
-
-                    <!--Description-->
-                    <p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus
-                        saepe eveniet ut et voluptates.
-                    </p>
-
-                    <div class="card-footer">
-              <span class="center">
-                <a href="#  " data-toggle="tooltip" data-placement="top" title="Link"><i
-                        class="fa fa-link"></i> IMDB</a>
-              </span>
-                    </div>
-
-                </div>
-                <!--/.Card content-->
-
-            </div>
-            <!--/.Card-->
-        </div>
-        <div class="col col-md-3">
-            <br>
-            <!--Card-->
-            <div class="card card-cascade wider">
-
-                <!--Card image-->
-                <div class="view overlay hm-white-slight">
-                    <img src="{% static 'img/terminal.jpg' %}" class="img-clip img-fluid" alt="">
-                    <a>
-                        <div class="mask waves-effect waves-light"></div>
-                    </a>
-                </div>
-                <!--/.Card image-->
-
-                <!--Card content-->
-                <div class="card-block text-center">
-                    <!--Category & Title-->
-                    <h5>Comedy</h5>
-                    <h4 class="card-title"><strong><a href="">The Terminal</a></strong></h4>
-
-                    <!--Rating-->
-                    <ul class="rating">
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star-o"></i></li>
-                    </ul>
-
-                    <!--Description-->
-                    <p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus
-                        saepe eveniet ut et voluptates.
-                    </p>
-
-                    <div class="card-footer">
-              <span class="center">
-                <a href="#  " data-toggle="tooltip" data-placement="top" title="Link"><i
-                        class="fa fa-link"></i> IMDB</a>
-              </span>
-                    </div>
-                </div>
-                <!--/.Card content-->
-
-            </div>
-            <!--/.Card-->
-        </div>
-    </div>
-{% endif %}
-</div>
-
-
-<!-- SCRIPTS -->
-
-<!-- JQuery -->
-<script type="text/javascript" src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
-
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="{% static 'js/tether.min.js' %}"></script>
-
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-
-<script>
-    new Chart(document.getElementById("feelingChart"), {
-        type: 'doughnut',
-        data: {
-            labels: ["Fear",
-                "Anger",
-                "Joy",
-                "Sadness",
-                "Disgust"
-            ],
-
-            datasets: [{
-                label: "Population (millions)",
-                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                data: [20, 10, 60, 5, 5]
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: "I'm excited to visit Paris next month."
-            }
-        }
-    });
-
-
-</script>
-
-</body>
-
-</html>
