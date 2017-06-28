@@ -53,6 +53,15 @@ class LSTMView(views.APIView):
 
         data = serializer.validated_data
         model_input = data["model_input"]
+
+        # Default values if not provided by the user of the API
+        startYear = 2010
+        endYear = 2017
+        movieRating = 7
+        try:
+            start_year = data["start_year"]
+        except:
+            pass
         # movie_year = data["movie_year"]
         # rating = data["rating"]
         '''
@@ -60,7 +69,7 @@ class LSTMView(views.APIView):
         feelings = data[0]
         movies_json = data[1]
         '''
-        data = runLSTM(str(model_input), rating=8,startYear=2010, endYear=2014)
+        data = runLSTM(str(model_input), rating=movieRating,startYear=startYear, endYear=endYear)
         feelings = data[0]
         # returns a list of 3 movies selected based on the input criteria
         movies_json = data[1]
@@ -101,8 +110,9 @@ class LSTMView(views.APIView):
 
             },
             "options": {
-                "movie_year": "movie_year",
-                "rating": "rating",
+                "start_year": startYear,
+                "end_year": endYear,
+                "rating": movieRating,
             }
 
         })
