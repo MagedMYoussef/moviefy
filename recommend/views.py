@@ -34,7 +34,7 @@ def recommend(request):
         feelings = data[0]
         movies_json = data[1]
         '''
-        data = runLSTM(str(user_text[0]))
+        data = runLSTM(str(user_text[0]),rating=8,startYear=2015, endYear=2017)
 
 
 

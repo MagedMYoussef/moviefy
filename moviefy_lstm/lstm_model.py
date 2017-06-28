@@ -14,6 +14,7 @@ from keras import backend as K
 from moviefy_lstm.apps import tokenizer
 
 import sys
+
 reload(sys)
 
 '''
@@ -24,6 +25,7 @@ MAX_NB_WORDS = 200000
 
 import requests
 import json, re
+
 
 # genres can be (Action-Adventure-Animation-Comedy-Crime-Documentary-Drama-Family-Fantasy
 # History-Horror-Music-Mystery-Romance-Science Fiction-TV Movie-Thriller-War-Western)
@@ -56,11 +58,11 @@ def getGenreId(requiredGen):
 # genreId can be an array of genres ex: [53,12,27]
 # rating is a number from 1 to 10
 
-def getMovies(genreId, rating=8, startYear=2015, endYear=2017):
+def getMovies(genreId, rating=8, startYear=1994, endYear=2017):
     Key = "4ea6a6403f897f25fc04b235768e15e4"
     url = "https://api.themoviedb.org/3/discover/movie?api_key=" + Key
     url = url + "&language=en-US&sort_by=popularity.desc&page=1"
-    url = url + "&with_genres=" + str(genreId) + "&vote_average_gte=" + str(rating)
+    url = url + "&with_genres=" + str(12) + "&vote_average_gte=" + str(rating)
     url = url + "&release_date_gte=" + str(startYear) + "-1-1&release_date_lte=" + str(endYear) + "-1-1"
 
     payload = "{}"
@@ -86,7 +88,7 @@ def mapFeelingToMovieGenre(topFeeling):
     return str[0:-1]
 
 
-def runLSTM(input_text):
+def runLSTM(input_text, rating, startYear, endYear):
     # Clearing the session before starting processing
     K.clear_session()
 
@@ -102,7 +104,6 @@ def runLSTM(input_text):
     # load weights into new model
     loaded_model.load_weights(os.path.join(__location__, 'model_25k_20k_RNN_GPU_BS100_EPOCH200_CODE1.h5'))
 
-
     input_text = [input_text]
 
     sequences = tokenizer.texts_to_sequences(input_text)
@@ -117,8 +118,8 @@ def runLSTM(input_text):
     feelings = [float("{0:.2f}".format(f * 100)) for f in feelings]
 
     '''
-           Get Recommended Movies based on the top most feelings.
-           '''
+    Get Recommended Movies based on the top most feelings.
+    '''
     top_feeling = feelings.index(max(feelings))
     feelings_list = ["Anger", "Disgust", "Fear", "Joy", "Sadness"]
     genres = mapFeelingToMovieGenre(feelings_list[top_feeling])
@@ -150,7 +151,7 @@ def runLSTM(input_text):
     ]
     '''
 
-    movies_json = getMovies(genres)
+    movies_json = getMovies(genres, rating, startYear, endYear)
 
     # list of returned data
     data = [feelings, movies_json]
