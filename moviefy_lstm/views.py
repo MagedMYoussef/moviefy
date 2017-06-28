@@ -10,35 +10,40 @@ curl 127.0.0.1:8000/modelapi/?model_input="I hate these new features On ThisPhon
 {
     "movies": {
         "movie_2": {
-            "overview": "This is the extraordinary tale of two brothers named Moses and Ramses, one born of royal blood, and one an orphan with a secret past. Growing up the best of friends, they share a strong bond of free-spirited youth and good-natured rivalry. But the truth will ultimately set them at odds, as one becomes the ruler of the most powerful empire on earth, and the other the chosen leader of his people! Their final confrontation will forever change their lives and the world.",
-            "poster_path": "/wD34ls2faCrj8YvFViEaPfBtBEe.jpg",
-            "id": 9837,
-            "title": "The Prince of Egypt"
+            "overview": "The cunning and wicked Urfin wants to become ruler of Magic Land. With an army of wooden soldiers, he captures the Emerald City and renames it ti Urfinville. He is all but ready to celebrate victory, when his plans are ruined by an ordinary girl named Dorothy, who arrives in Magic Land just at the right time. She must return home, but not before she helps her friends - the Scarecrow, the Tin Man, and new-brave Lion - defeat Urfin. And in order to do that, they need to find out who he really is.",
+            "tmdb_link": "https://www.themoviedb.org/movie/441957",
+            "poster_path": "https://image.tmdb.org/t/p/w640/fYG0IvEdQ54KM7r6IQ0ETrGj4Il.jpg",
+            "id": 441957,
+            "title": "Fantastic Journey to Oz"
         },
         "movie_3": {
-            "overview": "A young witch, on her mandatory year of independent life, finds fitting into a new community difficult while she supports herself by running an air courier service.",
-            "poster_path": "/d5gLpu8kqyPs27bh9IiCuwMDjDh.jpg",
-            "id": 16859,
-            "title": "Kiki's Delivery Service"
+            "overview": "In 2013, something terrible is awakening in London's National Gallery; in 1562, a murderous plot is afoot in Elizabethan England; and somewhere in space an ancient battle reaches its devastating conclusion. All of reality is at stake as the Doctor's own dangerous past comes back to haunt him.",
+            "tmdb_link": "https://www.themoviedb.org/movie/313106",
+            "poster_path": "https://image.tmdb.org/t/p/w640/lQy2QVcacuH55k37K9Ox0gw3YpZ.jpg",
+            "id": 313106,
+            "title": "Doctor Who: The Day of the Doctor"
         },
         "movie_1": {
-            "overview": "Tarzan was a small orphan who was raised by an ape named Kala since he was a child. He believed that this was his family, but on an expedition Jane Porter is rescued by Tarzan. He then finds out that he's human. Now Tarzan must make the decision as to which family he should belong to...",
-            "poster_path": "/hnTrfKJmnPLMTajHw2RDgv6hVyH.jpg",
-            "id": 37135,
-            "title": "Tarzan"
+            "overview": "Interstellar chronicles the adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
+            "tmdb_link": "https://www.themoviedb.org/movie/157336",
+            "poster_path": "https://image.tmdb.org/t/p/w640/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg",
+            "id": 157336,
+            "title": "Interstellar"
         }
     },
     "options": {
-        "rating": "rating",
-        "movie_year": "movie_year"
+        "end_year": 2017,
+        "start_year": 2012,
+        "rating": 8.0
     },
     "feelings": {
-        "anger": 63.56,
-        "joy": 0.95,
-        "fear": 5.01,
-        "sadness": 23.14,
-        "disgust": 7.34
+        "anger": 64.23,
+        "joy": 1.02,
+        "fear": 4.88,
+        "sadness": 22.71,
+        "disgust": 7.16
     }
+}
 '''
 
 
@@ -58,10 +63,21 @@ class LSTMView(views.APIView):
         startYear = 2010
         endYear = 2017
         movieRating = 7
+
+        # Get the user defined options if any is provided
         try:
-            start_year = data["start_year"]
+            startYear = data["start_year"]
         except:
             pass
+        try:
+            endYear = data["end_year"]
+        except:
+            pass
+        try:
+            movieRating = data["rating"]
+        except:
+            pass
+
         # movie_year = data["movie_year"]
         # rating = data["rating"]
         '''
@@ -91,6 +107,7 @@ class LSTMView(views.APIView):
                     "poster_path":"https://image.tmdb.org/t/p/w640" + movies_json[0]["poster_path"],
                     "id":movies_json[0]["id"],
                     "tmdb_link": "https://www.themoviedb.org/movie/" + str(movies_json[0]["id"]),
+                    "popularity": movies_json[0]["popularity"],
                 },
                 "movie_2": {
                     "title": movies_json[1]["title"],
@@ -98,6 +115,8 @@ class LSTMView(views.APIView):
                     "poster_path": "https://image.tmdb.org/t/p/w640" + movies_json[1]["poster_path"],
                     "id": movies_json[1]["id"],
                     "tmdb_link": "https://www.themoviedb.org/movie/" + str(movies_json[1]["id"]),
+                    "popularity": movies_json[1]["popularity"],
+
                 },
                 "movie_3": {
                     "title": movies_json[2]["title"],
@@ -105,7 +124,7 @@ class LSTMView(views.APIView):
                     "poster_path": "https://image.tmdb.org/t/p/w640" + movies_json[2]["poster_path"],
                     "id": movies_json[2]["id"],
                     "tmdb_link": "https://www.themoviedb.org/movie/" + str(movies_json[2]["id"]),
-
+                    "popularity": movies_json[2]["popularity"],
                 },
 
             },

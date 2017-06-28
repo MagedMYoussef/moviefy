@@ -63,27 +63,26 @@ def getGenreId(requiredGen):
 # rating is a number from 1 to 10
 
 
-def getMovies(genreId, rating=8, startYear=2014, endYear=2017):
-    '''
+def getMovies(genreIds, rating=8, startYear=2014, endYear=2017):
     # Directly using requests:
     Key = "4ea6a6403f897f25fc04b235768e15e4"
     url = "https://api.themoviedb.org/3/discover/movie?api_key="+Key
     url = url + "&language=en-US&sort_by=popularity.desc&page=1&include_adult=false"
-    url = url + "&with_genres="+ str(12)+"&vote_average.gte="+str(rating)
+    url = url + "&with_genres="+str(genreIds)+"&vote_average.gte="+str(rating)
     url = url + "&release_date.gte="+ str(startYear) + "-1-1&release_date.lte="+ str(endYear)+"-12-30"
 
     payload = "{}"
     response = requests.request("GET", url, data=payload)
     return response.json()["results"][0:3]
-    '''
+
     '''
     Or By Simply using a library
-    '''
     discover = tmdb.Discover()
     response = discover.movie(page=1, language="en-US", sort_by='popularity.desc', with_genres=12, vote_average_gte=rating, vote_count_gte=50,
                               release_date_gte=str(startYear)+"-1-1", release_date_lte=str(endYear)+"-12-30")
 
     return response["results"][0:3]
+    '''
 
 def mapFeelingToMovieGenre(topFeeling):
     if (topFeeling == "Sadness"):
@@ -99,7 +98,9 @@ def mapFeelingToMovieGenre(topFeeling):
 
     str = ""
     for genre in genres:
-        str = str + getGenreId(genre) + ","
+        # "%2C" for all genres inclusive like Comedy && Family && Fantasy
+        # "%7C" for anyone of them like Comedy || Family || Fantasy
+        str = str + getGenreId(genre) + "%7C"
     return str[0:-1]
 
 
