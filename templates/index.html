@@ -69,7 +69,7 @@
                             </li>
                             <li>
                                 {% if not request.user.is_authenticated %}
-                                    <a target="_blank" href="#" class="btn btn-primary btn-lg" rel="nofollow">Sign
+                                    <a href="{% url 'account_login' %}" class="btn btn-primary btn-lg" rel="nofollow">Sign
                                         up!</a>
                                 {% else %}
                                 {% endif %}
