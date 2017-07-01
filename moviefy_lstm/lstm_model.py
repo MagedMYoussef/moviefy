@@ -125,6 +125,7 @@ def runLSTM(input_text, rating, startYear, endYear):
     sequences = tokenizer.texts_to_sequences(input_text)
     data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 
+    # List of 5 feelings
     prediction = loaded_model.predict(data)
     # print(prediction)
     # This will return a list of predictions
@@ -132,17 +133,17 @@ def runLSTM(input_text, rating, startYear, endYear):
     # Feelings map
     feelings = prediction[0].tolist()
     feelings = [float("{0:.2f}".format(f * 100)) for f in feelings]
-
     '''
     Get Recommended Movies based on the top most feelings.
     '''
     top_feeling = feelings.index(max(feelings))
     feelings_list = ["Anger", "Disgust", "Fear", "Joy", "Sadness"]
     genres = mapFeelingToMovieGenre(feelings_list[top_feeling])
+
     # This will return a json object containing 3 movies.
     '''
     JSON Shape:
-    [
+    [ "results":
       {
         "poster_path": "/gfJGlDaHuWimErCr5Ql0I8x9QSy.jpg",
         "title": "Wonder Woman",
@@ -171,4 +172,5 @@ def runLSTM(input_text, rating, startYear, endYear):
 
     # list of returned data
     data = [feelings, movies_json]
+
     return data

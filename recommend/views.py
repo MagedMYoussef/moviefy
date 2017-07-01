@@ -20,7 +20,6 @@ def recommend(request):
         ['I hate these new features On #ThisPhone after the update.']
         '''
         user_text = [value for key, value in text_area.items() if 'text-area' in key.lower()]
-
         '''
         List of 5 Feelings returned from the LSTM Model
             "anger": feelings[0],

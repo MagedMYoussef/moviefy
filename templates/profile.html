@@ -32,7 +32,7 @@
                     <div class="col-lg-2 offset-lg-1 col-md-2 offset-md-0  col-sm-12 offset-sm-2 col-xs-12 ">
                         <!-- Getting the user profile picture -->
                         {% for account in request.user.socialaccount_set.all %}
-                            <img src="{{ account.extra_data.profile_image_url_https|cut:'_normal' }}"
+                                <img src="{{ account.extra_data.profile_image_url_https|cut:'_normal' }}"
                                  class="rounded-circle z-depth-2">
                         {% endfor %}
 
