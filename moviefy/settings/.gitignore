@@ -1,0 +1,4 @@
+# specific .gitignore for this directory
+
+# ignore dev.py
+dev.py
