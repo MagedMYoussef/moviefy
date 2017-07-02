@@ -62,7 +62,6 @@ def getGenreId(requiredGen):
 # genreId can be an array of genres ex: [53,12,27]
 # rating is a number from 1 to 10
 
-
 def getMovies(genreIds, rating=8, startYear=2014, endYear=2017):
     # Directly using requests:
     Key = "4ea6a6403f897f25fc04b235768e15e4"
@@ -108,7 +107,7 @@ def runLSTM(input_text, rating, startYear, endYear):
     # Clearing the session before starting processing
     K.clear_session()
 
-    # use this for handling file locations
+    # use this for handling file locations -Get the current directory
     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
     # Loading the Model from disk

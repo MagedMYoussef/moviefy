@@ -57,7 +57,6 @@ DEFAULT_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.twitter',
-
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -70,7 +69,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_QUERY_EMAIL = True
 LOGIN_REDIRECT_URL = "/"
-ACCOUNT_LOGOUT_REDIRECT_URL ="/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 # to disable the confirmation step on logout page
 ACCOUNT_LOGOUT_ON_GET = True
 
@@ -85,6 +84,8 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 ]
+
+
 
 # Template stuff
 TEMPLATES = [

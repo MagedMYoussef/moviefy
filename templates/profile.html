@@ -14,31 +14,96 @@
     body {
     background-color: #4e5d7a;
     }
+    .glyphicon {
+    margin-right: 4px !important; /*override*/
+    }
+    .pagination .glyphicon {
+    margin-right: 0px !important; /*override*/
+    }
+    .pagination a {
+    color: #555;
+    }
+    .panel ul {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+    }
+    .news-item {
+    padding: 4px 4px;
+    margin: 0px;
+    border-bottom: 1px dotted #555;
+    }
 {% endblock %}
 
 {% block body_remainder %}
 
     <!-- if the user is logged in -->
-    {% if request.user.is_authenticated %}
+    {% if request.user.is_authenticated and not request.user.is_superuser %}
         <div class="container container-2 ">
             <!--Author box-->
             <div class="author-box">
                 <!--Name-->
-                <h3 class="h3-responsive text-center">Welcome
-                    <strong>{{ request.user.username }}</strong> to Moviefy!</h3>
-                <hr>
                 <div class="row">
                     <!--Avatar-->
-                    <div class="col-lg-2 offset-lg-1 col-md-2 offset-md-0  col-sm-12 offset-sm-2 col-xs-12 ">
+                    <div class="col col-12 col-md-12 offset-md-5 offset-sm-4">
                         <!-- Getting the user profile picture -->
                         {% for account in request.user.socialaccount_set.all %}
-                                <img src="{{ account.extra_data.profile_image_url_https|cut:'_normal' }}"
+                            <img src="{{ account.extra_data.profile_image_url_https|cut:'_normal' }}" height="100px"
                                  class="rounded-circle z-depth-2">
                         {% endfor %}
 
                     </div>
+
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col col-12 col-md-12">
+                        <h2 class="h3-responsive text-center">Welcome
+                            <strong>{{ request.user.username }}</strong> to Moviefy!</h2>
+                    </div>
+                </div>
+                <hr>
+                <!-- Auto Scrolling Tweets - Newsticker style -->
+                <div class="row">
+
+                    <div class="col-md-4 offset-md-1  col-sm-12 offset-sm-2 col-xs-12">
+                        <br>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span><b>Your recent
+                                Tweets</b>
+                            </div>
+                            <br>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <ul class="demo">
+                                            {% for tweet in user_tweets %} <!-- loop 10 times -->
+                                                <li class="news-item">
+                                                    <table cellpadding="4">
+                                                        <tr>
+                                                            <td>
+                                                                <img src="{% static 'img/twitter-logo.png' %}"
+                                                                     width="60">
+                                                            </td>
+                                                            <td>
+                                                                {{ tweet }}
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer"></div>
+                        </div>
+                    </div>
                     <!--Author Data-->
-                    <div class="col-md-6 offset-md-2 col-sm-10 offset-sm-1">
+                    <div class="col-md-5 offset-md-1 col-sm-10 offset-sm-1">
                         <br>
                         <div class="row">
                             <div class="col">
@@ -112,6 +177,8 @@
 
                     </div>
                 </div>
+
+
                 <div class="row">
 
                     <div class=" col-md-8 offset-md-2 col-sm-10">
@@ -159,12 +226,12 @@
 
                 <h3 class="h3-responsive text-center">Sorry, you are not allowed to see this page.</h3>
 
-                <h3 class="h3-responsive text-center">Please Log in to continue!</h3>
+                <h3 class="h3-responsive text-center">Please Sign in using <strong>Twitter</strong> to continue!</h3>
                 <div class="row ">
                     <div class="col col-md-3 offset-md-5 offset-sm-4">
                         <div>
-                            <a href="{% url 'try:index' %}" class="btn btn-lg btn-flat  red"><i
-                                    class="fa fa-magic left"></i> Login</a>
+                            <a href="/accounts/login/" class="btn btn-lg btn-flat  red"><i
+                                    class="fa fa-magic left"></i> Sign in</a>
                         </div>
                     </div>
                 </div>
@@ -174,4 +241,26 @@
         </div>
     {% endif %}
 
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static 'js/jquery.bootstrap.newsbox.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".demo").bootstrapNews({
+                newsPerPage: 4,
+                navigation: true,
+                autoplay: true,
+                direction: 'up', // up or down
+                animationSpeed: 'normal',
+                newsTickerInterval: 3000, //4 secs
+                pauseOnHover: true,
+                onStop: null,
+                onPause: null,
+                onReset: null,
+                onPrev: null,
+                onNext: null,
+                onToDo: null
+            });
+        });
+    </script>
 {% endblock %}
