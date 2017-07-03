@@ -3,24 +3,65 @@ from django.http import HttpResponse, Http404
 from django.views import generic
 from moviefy_lstm.lstm_model import runLSTM
 
+
 def recommend(request):
     # Get the text the user typed to perform the algorithm on.
     # The template has a form that makes a POST request, we will go through this
     # request and get the value of the text entered
     if request.method == 'POST':
-        post_request = request.POST
+        # Default values if not provided by the user
+        startYear = 2010
+        endYear = 2017
+        movieRating = 7
+
         '''
         Type of return from POST
-        <QueryDict: {'csrfmiddlewaretoken': ['qeweqewr'], 'text-area1': ['I hate these new features On #ThisPhone after the update.']}>
+        <QueryDict>
         We well have key = 'text-area1', 'text-area2' or 'text-area3' based on where the user typed the text.
         '''
-        text_area = dict(post_request.dict())
+        post_request = request.POST
+
+        # Converting it to dictionary
+        request_dict = dict(post_request.dict())
+
+        # Check if the request from the Profile page, it should contain "tweets" field containing the user tweets
+        if "tweets" in request_dict:
+            # We are having the request from the profile page
+            # Fields in the POST request:
+            '''
+            <QueryDict: {u'tweets': [u"The most important thing is to enjoy your life - to be happy - it's all that matters.\r\n
+             Excited to watch the conference of the new iPhone !\r\nI am very happy today!\r\nHello Twitter! #myfirstTweet"],
+             u'rating': [u'8'], u'csrfmiddlewaretoken': [u'MoXTeOoBwraFC1fpkz0WSwqDu575xRHjBtn6nuXR2u8WstDkkcL7QODelg6nqNqH'],
+             u'end': [u'2017'], u'start': [u'2010']}>
+            '''
+            user_text = [value for key, value in request_dict.items() if key=="tweets"]
+
+            # Getting the optional parameters
+            movieRating = int(request_dict.get("rating"))
+            startYear = int(request_dict.get("start"))
+            endYear = int(request_dict.get("end"))
+
+        else:
+
+            # Else, it will contain only the text from the textarea field.
+            # i.e. it came from the tryitout page
+            '''
+            Form of Post request in this case:
+                <QueryDict: {u'text-area1': [u'I hate these new features On #ThisPhone after the update.'],
+                 u'csrfmiddlewaretoken': [u'adasdafasf']}>
+
+            We well have key = 'text-area1', 'text-area2' or 'text-area3' based on where the user typed the textarea.
+            Extracted text will be something like this
+            ['I hate these new features On #ThisPhone after the update.']
+            '''
+            user_text = [value for key, value in request_dict.items() if 'text-area' in key.lower()]
+
+
         '''
-        Extracted text will be something like this
-        ['I hate these new features On #ThisPhone after the update.']
-        '''
-        user_text = [value for key, value in text_area.items() if 'text-area' in key.lower()]
-        '''
+        Shape of data: data = [feelings, movies_json]
+        feelings = data[0]
+        movies_json = data[1]
+
         List of 5 Feelings returned from the LSTM Model
             "anger": feelings[0],
             "disgust":feelings[1],
@@ -28,12 +69,7 @@ def recommend(request):
             "joy":feelings[3],
             "sadness":feelings[4],
         '''
-        '''
-        Shape of data: data = [feelings, movies_json]
-        feelings = data[0]
-        movies_json = data[1]
-        '''
-        data = runLSTM(str(user_text[0]),rating=7,startYear=2010, endYear=2017)
+        data = runLSTM(str(user_text[0]), movieRating, startYear, endYear)
 
 
 
@@ -67,4 +103,3 @@ def recommend(request):
     '''
 
     return render(request, 'recommend.html', context)
-

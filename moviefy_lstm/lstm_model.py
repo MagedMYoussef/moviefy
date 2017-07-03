@@ -29,7 +29,7 @@ MAX_NB_WORDS = 200000
 
 import requests
 import json, re
-
+import random
 
 # genres can be (Action-Adventure-Animation-Comedy-Crime-Documentary-Drama-Family-Fantasy
 # History-Horror-Music-Mystery-Romance-Science Fiction-TV Movie-Thriller-War-Western)
@@ -63,16 +63,25 @@ def getGenreId(requiredGen):
 # rating is a number from 1 to 10
 
 def getMovies(genreIds, rating=8, startYear=2014, endYear=2017):
+    """
+    Limitation: we can only retrieve one page
+        and each page contains only 20 movies
+    What we will do:
+        We will randomize page selection each time using a random number from 1 to 5
+        and also randomize the number that is used within the page from 1 to 20 ... response.json()["results"][0:3]
+    """
     # Directly using requests:
     Key = "4ea6a6403f897f25fc04b235768e15e4"
     url = "https://api.themoviedb.org/3/discover/movie?api_key="+Key
     url = url + "&language=en-US&sort_by=popularity.desc&page=1&include_adult=false"
     url = url + "&with_genres="+str(genreIds)+"&vote_average.gte="+str(rating)
     url = url + "&release_date.gte="+ str(startYear) + "-1-1&release_date.lte="+ str(endYear)+"-12-30"
+    url = url + "&page=" + str(random.randint(0,5)) # Random Number from 0 to 5
 
     payload = "{}"
     response = requests.request("GET", url, data=payload)
-    return response.json()["results"][0:3]
+    # Each time we will return a randomized sublist from the page we are in, selecting a random list of 3 elements
+    return random.sample(response.json()["results"], 3)
 
     '''
     Or By Simply using a library
@@ -87,13 +96,13 @@ def mapFeelingToMovieGenre(topFeeling):
     if (topFeeling == "Sadness"):
         genres = ["Comedy", "Family", "Fantasy"]
     elif (topFeeling == "Anger"):
-        genres = ["Adventure", "Animation", "Drama"]
+        genres = ["Adventure", "Drama"]
     elif (topFeeling == "Fear"):
-        genres = ["Family", "Music"]
+        genres = ["Family","Comedy","Adventure"]
     elif (topFeeling == "Disgust"):
-        genres = ["Fantasy", "Animation", "Music"]
+        genres = ["Fantasy", "Music"]
     elif (topFeeling == "Joy"):
-        genres = ["Comedy", "Romance", "Mystery"]
+        genres = ["Comedy", "Romance", "Mystery", "Adventure"]
 
     str = ""
     for genre in genres:
