@@ -263,12 +263,12 @@
             $(this).append('<input type="hidden" name="tweets" value="{{ user_tweets|join:"\r\n" }}">');
             // Display a message while the page is loading
             $.blockUI({
-                message: '<img height="100px" src="https://www.wallies.com/filebin/images/loading_apple.gif" />',
+                message: '<img height="100px" src="{% static 'img/loading_apple.gif' %}" />',
                 css: {
                     border: 'none',
                     backgroundColor: 'transparent'
                 }
-            });;
+            });
 
             return true;
         });
@@ -278,10 +278,14 @@
         // To display a loading message when the user tries to reload/refresh the page
         window.onbeforeunload = function () {
             $.blockUI({
-                message: '<img height="100px" src="https://www.wallies.com/filebin/images/loading_apple.gif" />',
                 css: {
                     border: 'none',
-                    backgroundColor: 'transparent'
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
                 }
             });
         };

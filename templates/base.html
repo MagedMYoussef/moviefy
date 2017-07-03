@@ -105,12 +105,14 @@
             </ul>
             {% if request.user.is_authenticated %}
                 {% for account in request.user.socialaccount_set.all %}
-                    <a id="profile-page" href="{% url 'user_profile:profile' %}"> <img class="img-circle" src="{{ account.extra_data.profile_image_url_https|cut:'_normal' }}"></a>
+                    <a id="profile-page" href="{% url 'user_profile:profile' %}"> <img class="img-circle"
+                                                                                       src="{{ account.extra_data.profile_image_url_https|cut:'_normal' }}"></a>
                 {% endfor %}
                 <a href="{% url 'account_logout' %}" class="btn btn-info btn-sm navbar-right">Logout</a>
 
             {% else %}
-                <a href="{% url 'account_login' %}" class="btn btn-info btn-sm navbar-right"><i class="fa fa-magic left"></i> Login</a>
+                <a href="{% url 'account_login' %}" class="btn btn-info btn-sm navbar-right"><i
+                        class="fa fa-magic left"></i> Login</a>
 
             {% endif %}
 
@@ -143,16 +145,16 @@
 <script type="text/javascript" src="{% static 'js/blockui.min.js' %}"></script>
 
 <script>
-    $(document).on('click', '#profile-page', function() {
-   $.blockUI({
-                message: '<img height="100px" src="https://www.wallies.com/filebin/images/loading_apple.gif" />',
-                css: {
-                    border: 'none',
-                    backgroundColor: 'transparent'
-                }
-            });
+    $(document).on('click', '#profile-page', function () {
+        $.blockUI({
+            message: '<img height="100px" src="{% static 'img/loading_apple.gif' %}" />',
+            css: {
+                border: 'none',
+                backgroundColor: 'transparent'
+            }
+        });
 
-});
+    });
 
 </script>
 
