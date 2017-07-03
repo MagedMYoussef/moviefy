@@ -73,10 +73,11 @@ def getMovies(genreIds, rating=8, startYear=2014, endYear=2017):
     # Directly using requests:
     Key = "4ea6a6403f897f25fc04b235768e15e4"
     url = "https://api.themoviedb.org/3/discover/movie?api_key="+Key
-    url = url + "&language=en-US&sort_by=popularity.desc&page=1&include_adult=false"
-    url = url + "&with_genres="+str(genreIds)+"&vote_average.gte="+str(rating)
-    url = url + "&release_date.gte="+ str(startYear) + "-1-1&release_date.lte="+ str(endYear)+"-12-30"
-    url = url + "&page=" + str(random.randint(0,5)) # Random Number from 0 to 5
+    url = url + "&language=en-US&sort_by=popularity.desc&include_adult=false"
+    url = url + "&page=" + str(random.randint(1, 2))  # Random Number from 1 to 2
+    # TODO: Need to handle if we got a got an empty page.
+    url = url + "&with_genres="+str(genreIds)+"&vote_average.gte="+str(rating) + "&vote_count.gte=300"
+    url = url + "&primary_release_date.gte="+ str(startYear) + "-1-1&primary_release_date.lte="+ str(endYear)+"-12-30"
 
     payload = "{}"
     response = requests.request("GET", url, data=payload)
@@ -175,7 +176,6 @@ def runLSTM(input_text, rating, startYear, endYear):
       },
     ]
     '''
-
     movies_json = getMovies(genres, rating, startYear, endYear)
 
     # list of returned data

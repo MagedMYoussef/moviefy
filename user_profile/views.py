@@ -22,24 +22,28 @@ def oauth_req(url, key, secret, http_method="GET", post_body="", http_headers=No
 
 # Return Profile View for each user logged in.
 def profile(request):
-    # Get the access token for the logged in user to retrieve their tweets
-    # access_token has 2 values: TOKEN: access_token.token ** SECRET: access_token.token_secret
-    access_token = SocialToken.objects.get(account__user=request.user, account__provider='twitter')
+    if (request.user.is_authenticated):
+        # Get the access token for the logged in user to retrieve their tweets
+        # access_token has 2 values: TOKEN: access_token.token ** SECRET: access_token.token_secret
+        access_token = SocialToken.objects.get(account__user=request.user, account__provider='twitter')
 
-    # Accessing user tweets using the access token we that saved from login using allauth
-    # user_timeline = oauth_req('https://api.twitter.com/1.1/statuses/user_timeline.json', access_token.token, access_token.token_secret)
+        # Accessing user tweets using the access token we that saved from login using allauth
+        # user_timeline = oauth_req('https://api.twitter.com/1.1/statuses/user_timeline.json', access_token.token, access_token.token_secret)
 
-    # Using Tweepy for Accessing user tweets using the access token we that saved from login using allauth
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(access_token.token, access_token.token_secret)
-    api = tweepy.API(auth)
-    timeline = api.user_timeline(screen_name=request.user.username, count=10, include_rts=False)
-    # List of retrieved user tweets - Text only - (10 recent tweets)
-    user_tweets = []
-    for status in timeline:
-        user_tweets.append(status.text)
-    context = {
-        'user_tweets': user_tweets,
-        'access_token': access_token,
-    }
+        # Using Tweepy for Accessing user tweets using the access token we that saved from login using allauth
+        auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+        auth.set_access_token(access_token.token, access_token.token_secret)
+        api = tweepy.API(auth)
+        timeline = api.user_timeline(screen_name=request.user.username, count=10, include_rts=False)
+        # List of retrieved user tweets - Text only - (10 recent tweets)
+        user_tweets = []
+        for status in timeline:
+            user_tweets.append(status.text)
+        context = {
+            'user_tweets': user_tweets,
+            'access_token': access_token,
+        }
+    else:
+        context = {}
+
     return render(request, "profile.html", context)

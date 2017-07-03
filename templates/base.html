@@ -75,6 +75,7 @@
 
 
 <body>
+
 <!--Navbar-->
 <nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar">
     <div class="container">
@@ -104,7 +105,7 @@
             </ul>
             {% if request.user.is_authenticated %}
                 {% for account in request.user.socialaccount_set.all %}
-                    <a href="{% url 'user_profile:profile' %}"> <img class="img-circle" src="{{ account.extra_data.profile_image_url_https|cut:'_normal' }}"></a>
+                    <a id="profile-page" href="{% url 'user_profile:profile' %}"> <img class="img-circle" src="{{ account.extra_data.profile_image_url_https|cut:'_normal' }}"></a>
                 {% endfor %}
                 <a href="{% url 'account_logout' %}" class="btn btn-info btn-sm navbar-right">Logout</a>
 
@@ -116,6 +117,7 @@
         </div>
     </div>
 </nav>
+
 <!--/.Navbar-->
 {% block body_remainder %}
 {% endblock %}
@@ -136,6 +138,23 @@
 
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+
+<!-- Block UI -->
+<script type="text/javascript" src="{% static 'js/blockui.min.js' %}"></script>
+
+<script>
+    $(document).on('click', '#profile-page', function() {
+   $.blockUI({
+                message: '<img height="100px" src="https://www.wallies.com/filebin/images/loading_apple.gif" />',
+                css: {
+                    border: 'none',
+                    backgroundColor: 'transparent'
+                }
+            });
+
+});
+
+</script>
 
 {% block extra_js %}
 {% endblock %}

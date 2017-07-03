@@ -118,7 +118,9 @@
                             <!--Card content-->
                             <div class="card-block text-center">
                                 <!--Category & Title-->
-                                <h4 class="card-title"><strong><a href="https://www.themoviedb.org/movie/{{ movie.id }}">{{ movie.title }}</a></strong></h4>
+                                <h4 class="card-title"><strong><a
+                                        href="https://www.themoviedb.org/movie/{{ movie.id }}">{{ movie.title }}
+                                    ({{ movie.release_date|slice:":4" }})</a></strong></h4>
 
                                 <!--Rating-->
                                 <div class="row justify-content-center">
@@ -140,7 +142,8 @@
                                 <!--Card footer-->
                                 <div class="card-footer">
                                   <span class="center">
-                                    <a target="_blank" href="https://www.themoviedb.org/movie/{{ movie.id }}" title="Link"><i
+                                    <a target="_blank" href="https://www.themoviedb.org/movie/{{ movie.id }}"
+                                       title="Link"><i
                                             class="fa fa-link"></i> TMDB</a>
                                   </span>
 
@@ -203,6 +206,25 @@
         $(function () {
             $('span.stars').stars();
         });
+    </script>
+    <script>
+        // To display a loading message when the user tries to reload/refresh the page
+        window.onbeforeunload = function () {
+            $.blockUI({
+                message: '<img height="100px" src="https://www.wallies.com/filebin/images/loading_apple.gif" />',
+                css: {
+                    border: 'none',
+                    backgroundColor: 'transparent'
+                }
+            });
+        };
+        // Disable on all link clicks
+        $(function () {
+            $('a, input, button').click(function () {
+                window.onbeforeunload = null;
+            });
+        });
+
     </script>
 {% endblock %}
 

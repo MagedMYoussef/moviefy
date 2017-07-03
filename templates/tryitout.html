@@ -132,10 +132,9 @@
                             <br>
 
                             <div>
-                                <button type="submit" class="btn btn-lg btn-flat btn-block red">
+                                <button id="recommend-btn" type="submit" class="btn btn-lg btn-flat btn-block red">
                                     <i class="fa fa-magic left"></i>Recommend ME A MOVIE
                                 </button>
-
 
                             </div>
                         </div>
@@ -191,6 +190,19 @@
 
         });
 
+
+    </script>
+    <script>
+        $(document).on('click', '#recommend-btn', function () {
+            $.blockUI({
+                message: '<img height="100px" src="https://www.wallies.com/filebin/images/loading_apple.gif" />',
+                css: {
+                    border: 'none',
+                    backgroundColor: 'transparent'
+                }
+            });
+
+        });
 
     </script>
 {% endblock %}

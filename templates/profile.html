@@ -39,13 +39,16 @@
 
     <!-- if the user is logged in -->
     {% if request.user.is_authenticated and not request.user.is_superuser %}
+        <div id="domMessage" style="display:none;">
+            <h1>We are processing your request. Please be patient.</h1>
+        </div>
         <div class="container container-2 ">
             <!--Content box-->
             <div class="author-box">
 
                 <!--Profile Picture -->
                 <div class="row">
-                    <div class="col col-12 col-md-12 offset-md-5 offset-sm-4">
+                    <div class="col col-8 col-md-8 offset-md-5 offset-sm-4">
                         <!-- Getting the user profile picture -->
                         {% for account in request.user.socialaccount_set.all %}
                             <img src="{{ account.extra_data.profile_image_url_https|cut:'_normal' }}" height="100px"
@@ -56,7 +59,7 @@
                 <hr>
                 <!-- Welcome USERNAME -->
                 <div class="row">
-                    <div class="col col-12 col-md-12">
+                    <div class="col col-8 col-md-8 offset-md-2">
                         <h2 class="h3-responsive text-center">Welcome
                             <strong>{{ request.user.username }}</strong> to Moviefy!</h2>
                     </div>
@@ -113,7 +116,7 @@
                             </div>
                         </div>
                         <form id="movie-options-form" method="post" action="{% url 'recommend:recommendation' %}"
-                              class="form col-md-12 center-block">
+                              class="form center-block">
                             {% csrf_token %}
                             <!-- Movie Rating -->
                             <div class="row">
@@ -128,16 +131,16 @@
                                                        required> > 5
                                             </label>
                                             <label class="btn btn-primary">
+                                                <input type="radio" name="rating" id="type" value="6" class="sr-only"
+                                                       required> > 6
+                                            </label>
+                                            <label class="btn btn-primary">
                                                 <input type="radio" name="rating" id="type" value="7" class="sr-only"
                                                        required> > 7
                                             </label>
                                             <label class="btn btn-primary">
                                                 <input type="radio" name="rating" id="type" value="8" class="sr-only"
                                                        required> > 8
-                                            </label>
-                                            <label class="btn btn-primary">
-                                                <input type="radio" name="rating" id="type" value="9" class="sr-only"
-                                                       required> > 9
                                             </label>
                                         </div>
                                     </div>
@@ -232,8 +235,6 @@
 {% block extra_js %}
     <script src="{% static 'js/jquery.bootstrap.newsbox.min.js' %}" type="text/javascript"></script>
 
-
-
     <script type="text/javascript">
         // For the tweets news ticker
         $(function () {
@@ -260,9 +261,36 @@
         // Appending tweets to the POST request before submitting the form.
         $('#movie-options-form').submit(function (eventObj) {
             $(this).append('<input type="hidden" name="tweets" value="{{ user_tweets|join:"\r\n" }}">');
+            // Display a message while the page is loading
+            $.blockUI({
+                message: '<img height="100px" src="https://www.wallies.com/filebin/images/loading_apple.gif" />',
+                css: {
+                    border: 'none',
+                    backgroundColor: 'transparent'
+                }
+            });;
+
             return true;
         });
     </script>
 
+    <script>
+        // To display a loading message when the user tries to reload/refresh the page
+        window.onbeforeunload = function () {
+            $.blockUI({
+                message: '<img height="100px" src="https://www.wallies.com/filebin/images/loading_apple.gif" />',
+                css: {
+                    border: 'none',
+                    backgroundColor: 'transparent'
+                }
+            });
+        };
+        // Disable on all link clicks
+        $(function () {
+            $('a, input, button').click(function () {
+                window.onbeforeunload = null;
+            });
+        });
 
+    </script>
 {% endblock %}
