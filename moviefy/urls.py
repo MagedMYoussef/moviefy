@@ -9,35 +9,35 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^home/', include('homepage.urls')),
+    url(r'^home/', include('apps.homepage.urls')),
 
     # Redirect the base URL to our home application
     url(r'^$', RedirectView.as_view(url='/home/', permanent=True)),
 
     # Try it out page
-    url(r'^try/', include('tryitout.urls')),
+    url(r'^try/', include('apps.tryitout.urls')),
 
     # Recommendation
-    url(r'^recommend/', include('recommend.urls')),
+    url(r'^recommend/', include('apps.recommend.urls')),
 
     # Model API
-    url(r'^modelapi/', include('moviefy_lstm.urls')),
+    url(r'^modelapi/', include('apps.moviefy_lstm.urls')),
 
     # User Profile
     # \w will match any word characters and digits
     # url(r'^user/(?P<username>\w+)/', include('user_profile.urls')),
-    url(r'^profile/', include('user_profile.urls')),
+    url(r'^profile/', include('apps.user_profile.urls')),
 
     url(r'^accounts/', include('allauth.urls')),
     url(r'^accounts/logout/$', logout,
      {'next_page': '/accounts/login'}),
 
     # About
-    url(r'^about/', include('about.urls')),
+    url(r'^about/', include('apps.about.urls')),
 
     # Contact
-    url(r'^contact/', include('contact.urls')),
+    url(r'^contact/', include('apps.contact.urls')),
 
     # How it works
-    url(r'^howitworks/', include('howitworks.urls')),
+    url(r'^howitworks/', include('apps.howitworks.urls')),
 ]
