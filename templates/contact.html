@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block extra_css %}
+    .container-2 {
+    padding-top: 130px;
+    }
+{% endblock %}
+
+{% block active_contact %}
+    "nav-item active"
+{% endblock %}
+
+{% block body_remainder %}
+    <div class="container container-2 ">
+        <div class="row">
+            <div class="col col-md-12">
+                <div class="author-box">
+                    <div class="row justify-content-center">
+                        <!--Description -->
+                        <div class="col-md-9">
+                            <h1 class="oblique" style="text-align:center;"><strong>Get In Touch</strong></h1>
+                            <hr>
+                            <p style="text-align:center;">We are eager to discuss your buisness, entertainement needs,
+                                <br>and
+                                answer any questions
+                                you may have.<br>
+
+                            <p style="text-align:center;">Hop along and feel free to contact us through Facebook,
+                                Twitter, and
+                                E-mail.</p>
+                            <br>
+                            <div class="row justify-content-center">
+                                <div class="col col-md-3">
+                                    <a href="#"><img style="border:3px outset silver;"
+                                                     src="{% static 'img/facebook-flat.png' %}"
+                                                     class="img-fluid rounded-circle z-depth-2">
+                                    </a>
+                                </div>
+                                <div class="col col-md-3">
+                                    <a href="#"><img style="border:3px outset silver;"
+                                                     src="{% static 'img/twitter-2.png' %}"
+                                                     class="img-fluid rounded-circle z-depth-2">
+                                    </a>
+                                </div>
+                                <div class="col col-md-3">
+                                    <a href="#"><img style="border:3px outset silver;"
+                                                     src="{% static 'img/mail-flat.png' %}"
+                                                     class="img-fluid rounded-circle z-depth-2">
+                                    </a>
+                                </div>
+                            </div>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

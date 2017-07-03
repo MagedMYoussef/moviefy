@@ -32,4 +32,12 @@ urlpatterns = [
     url(r'^accounts/logout/$', logout,
      {'next_page': '/accounts/login'}),
 
+    # About
+    url(r'^about/', include('about.urls')),
+
+    # Contact
+    url(r'^contact/', include('contact.urls')),
+
+    # How it works
+    url(r'^howitworks/', include('howitworks.urls')),
 ]

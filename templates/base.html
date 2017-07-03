@@ -94,13 +94,16 @@
                             class="sr-only">(current)</span></a>
                 </li>
                 <li class={% block active_how %}"nav-item"{% endblock %}>
-                    <a class="nav-link">How it works</a>
+                    <a href="{% url 'howitworks:index' %}" class="nav-link">How it works</a>
                 </li>
                 <li class={% block active_try %}"nav-item"{% endblock %}>
                     <a href="{% url 'try:index' %}" class="nav-link">Try it out</a>
                 </li>
                 <li class={% block active_about %}"nav-item"{% endblock %}>
-                    <a class="nav-link">About</a>
+                    <a href="{% url 'about:index' %}" class="nav-link">About</a>
+                </li>
+                <li class={% block active_contact %}"nav-item"{% endblock %}>
+                    <a href="{% url 'contact:index' %}" class="nav-link">Contact</a>
                 </li>
             </ul>
             {% if request.user.is_authenticated %}

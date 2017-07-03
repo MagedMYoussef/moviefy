@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block extra_css %}
+    .container-2 {
+    padding-top: 100px;
+    }
+{% endblock %}
+
+{% block active_about %}
+    "nav-item active"
+{% endblock %}
+
+{% block body_remainder %}
+    <div class="container container-2 ">
+        <div class="row">
+
+            <div class="col col-md-12">
+                <div class="author-box">
+                    <div class="row">
+                        <!--Logo-->
+                        <div class="col-md-3 offset-md-1">  <!--small-->
+                            <img style="border:10px outset silver;" src="{% static 'img/theatre-512.png' %}"
+                                 class="img-fluid rounded-circle z-depth-2">
+                        </div>
+                        <!--Description -->
+                        <div class="col-md-6 offset-md-1">
+                            <h1>Moviefy</h1>
+                            <hr/>
+                            <br>
+                            <h4>
+                                When <strong>Machine Learning</strong> can tell you what movies to watch!
+                            </h4>
+                            <br/>
+                            <p>Moviefy, a machine learning based movie recommendation system which facilitates the
+                                process of choosing certain movie to watch and
+                                thinking about its rating, review ... etc.<br/></p>
+                            <p>Any user now can simply signin through their twitter account and then Moviefy will
+                                propose for them exciting movies to watch according to their feelings.<br/></p>
+                            <p>Also, without having an account anyone can <a href="{% url 'try:index' %}">TRY</a> by
+                                simply writing their own text and click on analyze button and get awesome recommendation
+                                from Moviefy.<br/></p>
+                            <p>Finally, Moviefy will continue to develop with the help of its users. We will continue to
+                                enhance the algorithm based on the results it gains from running on many users around
+                                the globe. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
