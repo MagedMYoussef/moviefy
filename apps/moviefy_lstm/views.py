@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .lstm_model import runLSTM
 import tweepy
 import unicodedata
+from .models import LSTM
 
 # Consumer keys and access tokens, used for OAuth - Twitter
 consumer_key = 'DIxitlH7HaqT0SxvHXZ0cDuEP'
@@ -121,6 +122,11 @@ class LSTMView(views.APIView):
             movieRating = data["rating"]
         except:
             pass
+
+        '''
+        Saving to the database
+        '''
+        LSTM_instance = LSTM.objects.create(model_input=model_input, start_year=startYear, end_year=endYear, rating=movieRating)
 
         # movie_year = data["movie_year"]
         # rating = data["rating"]
