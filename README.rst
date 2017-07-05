@@ -13,12 +13,14 @@ Status:
     in development
 
 Installation:
-    Moviefy is running on **python 2.7**. In order to successfully install the application locally, you will have to install some dependencies to get you started.
-    Moviefy makes use of deep neural network libraries like **tensorflow** and **keras**, so please install the following packages in the same order.
+    Moviefy is running on **python 2.7**. In order to successfully install the application locally, you will have to install some dependencies like **tensorflow** and **keras**. to get you started.
 
-    1. Anaconda for Python 2.7 - Update to the lateset version.
-    2. Install tensorflow and keras using conda.
-    3. Install django, djangorestframework, tmdbsimple, django-allauth, and tweepy using pip.
+    You can install the dependencies with the following command:
+
+    ```
+    pip install -r requirements.txt
+    ```
+
 
 Version:
     1.1
