@@ -103,10 +103,7 @@ class LSTMView(views.APIView):
                 model_input = "\r\n".join(user_tweets)
 
         else:
-            return Response({
-                "error_code": 400,
-                "error_message": "Invalid input, username must start with @"
-            })
+            pass
 
         # Default values if not provided by the user of the API
         startYear = 2010
