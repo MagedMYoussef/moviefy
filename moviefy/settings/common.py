@@ -51,6 +51,8 @@ DEFAULT_APPS = [
     'recommend.apps.RecommendConfig',
     'rest_framework',
     'moviefy_lstm.apps.MoviefyLstmConfig',
+    'user_profile.apps.UserProfileConfig',
+
     'django.contrib.sites',
 
     'allauth',

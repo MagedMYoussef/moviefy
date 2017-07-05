@@ -7,10 +7,10 @@ import unicodedata
 from .models import LSTM
 
 # Consumer keys and access tokens, used for OAuth - Twitter
-consumer_key = 'DIxitlH7HaqT0SxvHXZ0cDuEP'
-consumer_secret = 'WmuPQykTvYsuHvVuRmGqJ9PSIp8MkpLd1rWWigJ84zv2Yq4r1o'
-access_token = '159242496-v2B8e5ALI0Ois5pg0XP6fOM4JoszrzIeE8SLgOZC'
-access_token_secret = 'nuZkXJxjyxB5cOuEoeqylaakAa1lhyn4Pf33INdpB8h9R'
+CONSUMER_KEY = 'DIxitlH7HaqT0SxvHXZ0cDuEP'
+CONSUMER_SECRET = 'WmuPQykTvYsuHvVuRmGqJ9PSIp8MkpLd1rWWigJ84zv2Yq4r1o'
+ACCESS_TOKEN = '159242496-v2B8e5ALI0Ois5pg0XP6fOM4JoszrzIeE8SLgOZC'
+ACCESS_TOKEN_SECRET = 'nuZkXJxjyxB5cOuEoeqylaakAa1lhyn4Pf33INdpB8h9R'
 
 '''
 Some results from request/responses
@@ -80,8 +80,8 @@ class LSTMView(views.APIView):
         if model_input.startswith('@'):
             # @username
             # OAuth process, using the keys and tokens
-            auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-            auth.set_access_token(access_token, access_token_secret)
+            auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+            auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
             # Creation of the actual interface, using authentication
             api = tweepy.API(auth)
             # Getting the recent user tweets
@@ -95,14 +95,18 @@ class LSTMView(views.APIView):
             # We will return an error response in this case
             if not user_tweets:
                 return Response({
-                    "error": "Sorry, we are unable to process your tweets. Please check if you already have your Tweets written on English as currently our algorithm only runs on English text only."
+                    "error_code": 500,
+                    "error_message": "Sorry, we are unable to process your tweets. Please check if you already have your Tweets written on English as currently our algorithm only runs on English text only."
                 })
             else:
                 # Converting the list of tweets to a full string separated by "\r\n"
                 model_input = "\r\n".join(user_tweets)
 
         else:
-            pass
+            return Response({
+                "error_code": 400,
+                "error_message": "Invalid input, username must start with @"
+            })
 
         # Default values if not provided by the user of the API
         startYear = 2010

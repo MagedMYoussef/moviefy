@@ -1,5 +1,4 @@
-from rest_framework import serializers, views
-from .models import LSTM
+from rest_framework import serializers
 
 
 class LSTMSerializer(serializers.Serializer):
