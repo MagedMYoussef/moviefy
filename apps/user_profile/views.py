@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
-from django.views import generic
 from allauth.socialaccount.models import SocialToken
 #import oauth2
 import tweepy
@@ -36,12 +34,19 @@ def profile(request):
         api = tweepy.API(auth)
         timeline = api.user_timeline(screen_name=request.user.username, count=10, include_rts=False)
         # List of retrieved user tweets - Text only - (10 recent tweets)
+        lang = True # True means english
         user_tweets = []
         for status in timeline:
-            user_tweets.append(status.text)
+            if status.lang == "en":
+                user_tweets.append(status.text)
+
+        if not user_tweets:
+            lang = False
+
         context = {
             'user_tweets': user_tweets,
             'access_token': access_token,
+            'lang': lang
         }
     else:
         context = {}

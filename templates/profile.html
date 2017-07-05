@@ -65,133 +65,152 @@
                     </div>
                 </div>
                 <hr>
-                <!-- Twitter stream and Options -->
-                <div class="row">
-                    <!-- Auto Scrolling Tweets - Newsticker style -->
-                    <div class="col-md-4 offset-md-1  col-sm-12 offset-sm-2 col-xs-12">
-                        <br>
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span><b>Your
-                                recent
-                                Tweets</b>
-                            </div>
+                <!-- Check first for the language of user tweets -->
+                {% if lang %}
+                    <!-- Twitter stream and Options -->
+                    <div class="row">
+                        <!-- Auto Scrolling Tweets - Newsticker style -->
+                        <div class="col-md-4 offset-md-1  col-sm-12 offset-sm-2 col-xs-12">
                             <br>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <ul class="demo">
-                                            {% for tweet in user_tweets %} <!-- loop 10 times -->
-                                                <li class="news-item">
-                                                    <table cellpadding="4">
-                                                        <tr>
-                                                            <td>
-                                                                <img src="{% static 'img/twitter-logo.png' %}"
-                                                                     width="60">
-                                                            </td>
-                                                            <td>
-                                                                {{ tweet }}
-                                                            </td>
 
-                                                        </tr>
-                                                    </table>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span><b>Your
+                                    recent
+                                    Tweets</b>
                                 </div>
-                            </div>
-                            <div class="panel-footer"></div>
-                        </div>
-                    </div>
-                    <!-- Other options like Rating, Start Year, End Year -->
-                    <div class="col-md-5 offset-md-1 col-sm-10 offset-sm-1">
-                        <br>
-                        <!-- Description -->
-                        <div class="row">
-                            <div class="col">
-                                <p>Ready to watch a new movie? Just choose your options, click
-                                    <strong>recommend</strong>
-                                    and let Moviefy do the rest.</p>
-                            </div>
-                        </div>
-                        <form id="movie-options-form" method="post" action="{% url 'recommend:recommendation' %}"
-                              class="form center-block">
-                            {% csrf_token %}
-                            <!-- Movie Rating -->
-                            <div class="row">
-                                <div class="col">
-                                    <br>
-                                    <p><strong>Movie Rating:</strong></p>
-                                    <div data-toggle="buttons">
-                                        <div class="btn-group">
+                                <br>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <ul class="demo">
+                                                {% for tweet in user_tweets %} <!-- loop 10 times -->
+                                                    <li class="news-item">
+                                                        <table cellpadding="4">
+                                                            <tr>
+                                                                <td>
+                                                                    <img src="{% static 'img/twitter-logo.png' %}"
+                                                                         width="60">
+                                                                </td>
+                                                                <td>
+                                                                    {{ tweet }}
+                                                                </td>
 
-                                            <label class="btn btn-primary">
-                                                <input type="radio" name="rating" id="type" value="5" class="sr-only"
-                                                       required> > 5
-                                            </label>
-                                            <label class="btn btn-primary">
-                                                <input type="radio" name="rating" id="type" value="6" class="sr-only"
-                                                       required> > 6
-                                            </label>
-                                            <label class="btn btn-primary">
-                                                <input type="radio" name="rating" id="type" value="7" class="sr-only"
-                                                       required> > 7
-                                            </label>
-                                            <label class="btn btn-primary">
-                                                <input type="radio" name="rating" id="type" value="8" class="sr-only"
-                                                       required> > 8
-                                            </label>
+                                                            </tr>
+                                                        </table>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="panel-footer"></div>
                             </div>
-                            <!-- Movie Year -->
+                        </div>
+
+                        <!-- Other options like Rating, Start Year, End Year -->
+                        <div class="col-md-5 offset-md-1 col-sm-10 offset-sm-1">
+                            <br>
+                            <!-- Description -->
                             <div class="row">
                                 <div class="col">
-                                    <br>
-                                    <p><strong>Movie Year:</strong></p>
-                                    <input id="startYear" name="start" type="number" required min="1900" max="2017"
-                                           placeholder="From.."/>
-                                    <input id="endYear" name="end" type="number" required min="1900" max="2017"
-                                           placeholder="To.."/>
+                                    <p>Ready to watch a new movie? Just choose your options, click
+                                        <strong>recommend</strong>
+                                        and let Moviefy do the rest.</p>
                                 </div>
                             </div>
-                            <!-- Recommend Button -->
-                            <div class="row">
+                            <form id="movie-options-form" method="post" action="{% url 'recommend:recommendation' %}"
+                                  class="form center-block">
+                                {% csrf_token %}
+                                <!-- Movie Rating -->
+                                <div class="row">
+                                    <div class="col">
+                                        <br>
+                                        <p><strong>Movie Rating:</strong></p>
+                                        <div data-toggle="buttons">
+                                            <div class="btn-group">
 
-                                <div class="col col-md-12">
-                                    <br>
-
-                                    <div>
-                                        <button type="submit" class="btn btn-lg btn-flat btn-block red">
-                                            <i class="fa fa-magic left"></i>Recommend ME A MOVIE
-                                        </button>
+                                                <label class="btn btn-primary">
+                                                    <input type="radio" name="rating" id="type" value="5"
+                                                           class="sr-only"
+                                                           required> > 5
+                                                </label>
+                                                <label class="btn btn-primary">
+                                                    <input type="radio" name="rating" id="type" value="6"
+                                                           class="sr-only"
+                                                           required> > 6
+                                                </label>
+                                                <label class="btn btn-primary">
+                                                    <input type="radio" name="rating" id="type" value="7"
+                                                           class="sr-only"
+                                                           required> > 7
+                                                </label>
+                                                <label class="btn btn-primary">
+                                                    <input type="radio" name="rating" id="type" value="8"
+                                                           class="sr-only"
+                                                           required> > 8
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                                <!-- Movie Year -->
+                                <div class="row">
+                                    <div class="col">
+                                        <br>
+                                        <p><strong>Movie Year:</strong></p>
+                                        <input id="startYear" name="start" type="number" required min="1900" max="2017"
+                                               placeholder="From.."/>
+                                        <input id="endYear" name="end" type="number" required min="1900" max="2017"
+                                               placeholder="To.."/>
+                                    </div>
+                                </div>
+                                <!-- Recommend Button -->
+                                <div class="row">
+
+                                    <div class="col col-md-12">
+                                        <br>
+
+                                        <div>
+                                            <button type="submit" class="btn btn-lg btn-flat btn-block red">
+                                                <i class="fa fa-magic left"></i>Recommend ME A MOVIE
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
 
-                </div>
-
-                <!-- Disclaimer -->
-                <div class="row">
-                    <div class=" col-md-8 offset-md-2 col-sm-10">
-                        <br>
-                        <p>
-                            <small><strong>Disclaimer:</strong> we are going to use your recent tweets from twitter
-                                to
-                                get a
-                                personalized movie for
-                                you. If you don't want to continue, you can simply try our second option by entering
-                                your
-                                own
-                                custom text.
-                            </small>
-                        </p>
+                    <!-- Disclaimer -->
+                    <div class="row">
+                        <div class=" col-md-8 offset-md-2 col-sm-10">
+                            <br>
+                            <p>
+                                <small><strong>Disclaimer:</strong> we are going to use your recent tweets from twitter
+                                    to
+                                    get a
+                                    personalized movie for
+                                    you. If you don't want to continue, you can simply try our second option by entering
+                                    your
+                                    own
+                                    custom text.
+                                    Also, Moviefy algorithm currently runs only on English text. So, if your tweets are
+                                    writter in non-english language, we won't process them. In this case, you can try
+                                    the
+                                    algorithm using the below button.
+                                </small>
+                            </p>
+                        </div>
                     </div>
-                </div>
+                {% else %}
+                    <div class="row justify-content-center">
+                        <div class="col-md-8  col-sm-10 offset-sm-1">
+                            <img src="{% static 'img/moviefy-sorrypage.png' %}" class="img-fluid">
+                        </div>
+                    </div>
+
+                {% endif %}
                 <!-- Try using your own text Button -->
                 <div class="row">
 
@@ -199,7 +218,7 @@
 
                         <div>
                             <a href="{% url 'try:index' %}" class="btn btn-lg btn-flat btn-block stylish-color"><i
-                                    class="fa fa-magic left"></i> OR TRY USING YOUR OWN CUSTOM TEXT</a>
+                                    class="fa fa-magic left"></i> TRY USING YOUR OWN CUSTOM TEXT</a>
                         </div>
                     </div>
                 </div>
@@ -212,7 +231,7 @@
             <div class="author-box">
                 <div class="row ">
                     <div class="col col-md-4 offset-md-5 offset-sm-4">
-                        <img src="{% static 'img/theatre-512.png' %}" height="160   px">
+                        <img src="{% static 'img/theatre-512.png' %}" height="160px">
                     </div>
                 </div>
                 <hr>

@@ -148,7 +148,7 @@
 {% endblock %}
 
 {% block extra_js %}
-
+    <!-- Handling getting the input text from the text area of the selected tab -->
     <script>
         $(document).ready(function () {
             var current_tab;
@@ -190,6 +190,7 @@
 
 
     </script>
+    <!-- BlockUI -- Load a GIF when the user presses the recommend button -->
     <script>
         $(document).on('click', '#recommend-btn', function () {
             $.blockUI({

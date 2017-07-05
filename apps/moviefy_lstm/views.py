@@ -1,8 +1,15 @@
 from rest_framework import serializers, views
 from .serializers import LSTMSerializer
 from rest_framework.response import Response
-from django.http import HttpResponse
 from .lstm_model import runLSTM
+import tweepy
+import unicodedata
+
+# Consumer keys and access tokens, used for OAuth - Twitter
+consumer_key = 'DIxitlH7HaqT0SxvHXZ0cDuEP'
+consumer_secret = 'WmuPQykTvYsuHvVuRmGqJ9PSIp8MkpLd1rWWigJ84zv2Yq4r1o'
+access_token = '159242496-v2B8e5ALI0Ois5pg0XP6fOM4JoszrzIeE8SLgOZC'
+access_token_secret = 'nuZkXJxjyxB5cOuEoeqylaakAa1lhyn4Pf33INdpB8h9R'
 
 '''
 Some results from request/responses
@@ -59,6 +66,43 @@ class LSTMView(views.APIView):
         data = serializer.validated_data
         model_input = data["model_input"]
 
+        # If model_input was a username @magedmagdy01
+        # We will use this to solve authentications problems in Moviefy mobile app
+        # The mobile app will send an API request to get movies recommendation and feelings of the user
+        # and provides the username, we will do the rest, grab the user tweets, run the model on them, and output the results in json response.
+        model_input = unicodedata.normalize('NFKD', model_input).encode('ascii', 'ignore')
+        # model_input = "@magedmagdy01"
+
+        model_input = model_input[1:-1]
+        # model_input = @magedmagdy01
+
+        if model_input.startswith('@'):
+            # @username
+            # OAuth process, using the keys and tokens
+            auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+            auth.set_access_token(access_token, access_token_secret)
+            # Creation of the actual interface, using authentication
+            api = tweepy.API(auth)
+            # Getting the recent user tweets
+            timeline = api.user_timeline(screen_name=model_input, count=10, include_rts=False)
+            user_tweets = []
+            for status in timeline:
+                if status.lang == "en":
+                    user_tweets.append(status.text)
+
+            # Check if user_tweets is empty .. i.e. we didn't find any english tweets to process on
+            # We will return an error response in this case
+            if not user_tweets:
+                return Response({
+                    "error": "Sorry, we are unable to process your tweets. Please check if you already have your Tweets written on English as currently our algorithm only runs on English text only."
+                })
+            else:
+                # Converting the list of tweets to a full string separated by "\r\n"
+                model_input = "\r\n".join(user_tweets)
+
+        else:
+            pass
+
         # Default values if not provided by the user of the API
         startYear = 2010
         endYear = 2017
@@ -85,7 +129,7 @@ class LSTMView(views.APIView):
         feelings = data[0]
         movies_json = data[1]
         '''
-        data = runLSTM(str(model_input), rating=movieRating,startYear=startYear, endYear=endYear)
+        data = runLSTM(str(model_input), rating=movieRating, startYear=startYear, endYear=endYear)
         feelings = data[0]
         # returns a list of 3 movies selected based on the input criteria
         movies_json = data[1]
@@ -104,8 +148,8 @@ class LSTMView(views.APIView):
                 "movie_1": {
                     "title": movies_json[0]["title"],
                     "overview": movies_json[0]["overview"],
-                    "poster_path":"https://image.tmdb.org/t/p/w640" + movies_json[0]["poster_path"],
-                    "id":movies_json[0]["id"],
+                    "poster_path": "https://image.tmdb.org/t/p/w640" + movies_json[0]["poster_path"],
+                    "id": movies_json[0]["id"],
                     "tmdb_link": "https://www.themoviedb.org/movie/" + str(movies_json[0]["id"]),
                     "popularity": movies_json[0]["popularity"],
                 },
