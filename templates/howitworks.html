@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block extra_css %}
+    .container-2 {
+    padding-top: 130px;
+    }
+{% endblock %}
+
+{% block active_how %}
+    "nav-item active"
+{% endblock %}
+
+{% block body_remainder %}
+    <div class="container container-2 ">
+        <div class="row">
+            <div class="col col-md-12">
+                <div class="author-box">
+                    <div class="row justify-content-center">
+                        <!--Description -->
+                        <div class="col-md-12">
+                            <h1 class="oblique" style="text-align:center;"><strong>How it works</strong></h1>
+                            <hr>
+
+                            <div class="row justify-content-center">
+                                <div class="col col-md-3 col-sm-10">
+                                    <img src="{% static 'img/Howitworks-01.png' %}"
+                                         class="img-fluid">
+                                    <p align="center"><strong>First,</strong> Moviefy will analyze your recent tweets or
+                                        your custom text using the advanced techniques of text processing and data
+                                        mining.
+                                    </p>
+                                </div>
+                                <div class="col col-md-3 col-sm-10">
+                                    <img src="{% static 'img/Howitworks-02.png' %}"
+                                         class="img-fluid">
+                                    <p align="center"><strong>Then,</strong> after completing the analysis, Moviefy's super powerful
+                                        Machine Learning algorithm, will use your recent tweets/text to detect your
+                                        current emotional and feeling status.
+                                    </p>
+                                </div>
+                                <div class="col col-md-3 col-sm-10">
+                                    <img src="{% static 'img/Howitworks-03.png' %}"
+                                         class="img-fluid">
+                                    <p align="center"><strong>Finally,</strong> with the help of the acquired data, Moviefy will try to
+                                        recommend you some movies based on the result of your emotional status.
+                                    </p>
+                                </div>
+                            </div>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

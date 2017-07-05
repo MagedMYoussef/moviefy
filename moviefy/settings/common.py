@@ -38,6 +38,11 @@ sys.path.append(normpath(join(PROJECT_ROOT, 'apps')))
 
 # ##### APPLICATION CONFIGURATION #########################
 
+
+# Allowed Hosts
+# TODO: Edit this later in deployment
+ALLOWED_HOSTS = ['*']
+
 # This are the apps
 DEFAULT_APPS = [
     'django.contrib.admin',
