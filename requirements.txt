@@ -3,7 +3,7 @@ django-allauth==0.32.0
 djangorestframework==3.9.1
 https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.2.1-cp27-none-linux_x86_64.whl
 Keras==2.0.2
-nltk==3.2
+nltk==3.4.5
 pandas==0.18.0
 requests==2.20.0
 tweepy==3.5.0
