@@ -5,7 +5,7 @@ https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.2.1-cp27-none-l
 Keras==2.0.2
 nltk==3.2
 pandas==0.18.0
-requests==2.12.4
+requests==2.20.0
 tweepy==3.5.0
 tmdbsimple==1.7.0
 h5py==2.7.0
