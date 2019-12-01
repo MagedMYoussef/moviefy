@@ -1,4 +1,4 @@
-Django==1.11.2
+Django==1.11.23
 django-allauth==0.32.0
 djangorestframework==3.6.3
 https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.2.1-cp27-none-linux_x86_64.whl
