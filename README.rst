@@ -1,34 +1,22 @@
 Moviefy: When machine learning can tell you what movies to watch!
 =================================================================
 
-**moviefy** is a machine learning based recommendation system that can tell you what movies to watch based on your recent social activities.
+**Moviefy** is an emotion recognition system with a movies recommendation engine & a web interface that analyzes your feelings and tells you what movies to watch based on your recent social activities.
 
-Meta
+
+About
+----
+Moviefy is a Graduation Project - Faculty of Engineering - Computer & Systems Department - Ain Shams University - Egypt - Class of 2017
+
+
+Getting Started
 ----
 
-Author:
-    Graduation Project - Faculty of Engineering, Ain Shams University - Egypt - Class of 2017
+Moviefy is running on **python 2.7**. In order to successfully install the application locally, you will have to install some dependencies like **tensorflow** and **keras**. to get you started.
 
-Status:
-    in development
+You can install the dependencies with the following command:
 
-Installation:
-    Moviefy is running on **python 2.7**. In order to successfully install the application locally, you will have to install some dependencies like **tensorflow** and **keras**. to get you started.
+```
+pip install -r requirements.txt
+```
 
-    You can install the dependencies with the following command:
-
-    ```
-    pip install -r requirements.txt
-    ```
-
-
-Version:
-    1.1
-
-
-Usage
------
-
-
-Documentation
--------------
