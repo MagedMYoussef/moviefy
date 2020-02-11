@@ -1,4 +1,4 @@
-Django==1.11.23
+Django==1.11.28
 django-allauth==0.32.0
 djangorestframework==3.9.1
 Keras==2.0.2
