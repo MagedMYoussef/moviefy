@@ -8,4 +8,4 @@ requests==2.20.0
 tweepy==3.5.0
 tmdbsimple==1.7.0
 h5py==2.7.0
-tensorflow==1.15.2
+tensorflow==2.5.3
